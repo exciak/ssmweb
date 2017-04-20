@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.klw.oa.dao.DeptMapper">
+  <resultMap id="BaseResultMap" type="com.klw.oa.entity.Dept">
+    <id column="dept_id" jdbcType="INTEGER" property="dept_id" />
+    <result column="pid" jdbcType="INTEGER" property="pid" />
+    <result column="dept_name" jdbcType="VARCHAR" property="dept_name" />
+    <result column="dept_url" jdbcType="VARCHAR" property="dept_url" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    dept_id, pid, dept_name, dept_url
+  </sql>
+   <select id="selectByPid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dept
+    where pid = #{pid}
+  </select>
+   <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dept
+    where dept_name = #{dept_name,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAllMap"  resultType="map">
+    
+    SELECT   dept_id, pid, dept_name, dept_url
+    from dept
+    order by dept_id
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from dept
+    where dept_id = #{dept_id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from dept
+    where dept_id = #{dept_id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByUrl" parameterType="java.lang.String">
+    delete from dept
+    where dept_url like  "%" #{dept_url} "%"
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="dept_id" parameterType="com.klw.oa.entity.Dept">
+    insert into dept (dept_id, pid, dept_name, 
+      dept_url)
+    values (#{dept_id,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{dept_name,jdbcType=VARCHAR}, 
+      #{dept_url,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="dept_id" parameterType="com.klw.oa.entity.Dept">
+    insert into dept
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dept_id != null">
+        dept_id,
+      </if>
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="dept_name != null">
+        dept_name,
+      </if>
+      <if test="dept_url != null">
+        dept_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dept_id != null">
+        #{dept_id,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="dept_name != null">
+        #{dept_name,jdbcType=VARCHAR},
+      </if>
+      <if test="dept_url != null">
+        #{dept_url,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.klw.oa.entity.Dept">
+    update dept
+    <set>
+      <if test="pid != null">
+        pid = #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="dept_name != null">
+        dept_name = #{dept_name,jdbcType=VARCHAR},
+      </if>
+      <if test="dept_url != null">
+        dept_url = #{dept_url,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where dept_id = #{dept_id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.klw.oa.entity.Dept">
+    update dept
+    set pid = #{pid,jdbcType=INTEGER},
+      dept_name = #{dept_name,jdbcType=VARCHAR},
+      dept_url = #{dept_url,jdbcType=VARCHAR}
+    where dept_id = #{dept_id,jdbcType=INTEGER}
+  </update>
+</mapper>

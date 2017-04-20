@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.klw.oa.dao.TechClsMapper">
+  <resultMap id="BaseResultMap" type="com.klw.oa.entity.TechCls">
+    <id column="techclsid" jdbcType="INTEGER" property="techclsid" />
+    
+    <result column="startdate" jdbcType="DATE" property="startdate" />
+    <result column="enddate" jdbcType="DATE" property="enddate" />
+    <result column="phase" jdbcType="INTEGER" property="phase" />
+    <association column="classid" property="classes" javaType="com.klw.oa.entity.Classes" select="com.klw.oa.dao.ClassesMapper.selectByPrimaryKey"></association>
+    <association column="techid" property="teacher" javaType="com.klw.oa.entity.Teacher" select="com.klw.oa.dao.TeacherMapper.selectByPrimaryKey"></association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    techclsid, classid, techid, startdate, enddate, phase
+  </sql>
+   <select id="selectByClsId" parameterType="java.lang.Integer" resultType="int">
+    select 
+    count(*) num
+    from techcls
+    where classid = #{classid}
+  </select>
+  <!-- 查询所有 -->
+  <select id="selectAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from techcls
+   	
+    order by  techclsid
+  </select>
+  <!-- 根据班级查询所有 -->
+  <select id="selectAllByClsId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from techcls
+   	where classid=#{classid}
+    order by  techclsid
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from techcls
+    where techclsid = #{techclsid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from techcls
+    where techclsid = #{techclsid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.klw.oa.entity.TechCls">
+    insert into techcls (techclsid, classid, techid, 
+      startdate, enddate, phase
+      )
+    values (#{techclsid,jdbcType=INTEGER}, #{classes.classid,jdbcType=INTEGER}, #{teacher.techid,jdbcType=INTEGER}, 
+      #{startdate,jdbcType=DATE}, #{enddate,jdbcType=DATE}, #{phase,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.klw.oa.entity.TechCls">
+    insert into techcls
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="techclsid != null">
+        techclsid,
+      </if>
+      <if test="classes.classid != null">
+        classid,
+      </if>
+      <if test="teacher.techid != null">
+        techid,
+      </if>
+      <if test="startdate != null">
+        startdate,
+      </if>
+      <if test="enddate != null">
+        enddate,
+      </if>
+      <if test="phase != null">
+        phase,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="techclsid != null">
+        #{techclsid,jdbcType=INTEGER},
+      </if>
+      <if test="classes.classid != null">
+        #{classes.classid,jdbcType=INTEGER},
+      </if>
+      <if test="teacher.techid != null">
+        #{teacher.techid,jdbcType=INTEGER},
+      </if>
+      <if test="startdate != null">
+        #{startdate,jdbcType=DATE},
+      </if>
+      <if test="enddate != null">
+        #{enddate,jdbcType=DATE},
+      </if>
+      <if test="phase != null">
+        #{phase,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.klw.oa.entity.TechCls">
+    update techcls
+    <set>
+      <if test="classes.classid != null">
+        classid = #{classes.classid,jdbcType=INTEGER},
+      </if>
+      <if test="teacher.techid != null">
+        techid = #{teacher.techid,jdbcType=INTEGER},
+      </if>
+      <if test="startdate != null">
+        startdate = #{startdate,jdbcType=DATE},
+      </if>
+      <if test="enddate != null">
+        enddate = #{enddate,jdbcType=DATE},
+      </if>
+      <if test="phase != null">
+        phase = #{phase,jdbcType=INTEGER},
+      </if>
+    </set>
+    where techclsid = #{techclsid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.klw.oa.entity.TechCls">
+    update techcls
+    set classid = #{classes.classid,jdbcType=INTEGER},
+      techid = #{teacher.techid,jdbcType=INTEGER},
+      startdate = #{startdate,jdbcType=DATE},
+      enddate = #{enddate,jdbcType=DATE},
+      phase = #{phase,jdbcType=INTEGER}
+    where techclsid = #{techclsid,jdbcType=INTEGER}
+  </update>
+</mapper>

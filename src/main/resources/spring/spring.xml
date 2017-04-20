@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd 
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+	<context:annotation-config></context:annotation-config>
+    <context:component-scan base-package="com.klw.oa">
+    	<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+	<!--&lt;!&ndash; Freemarker配置 &ndash;&gt;
+	<bean id="freemarkerConfig"
+		  class="com.klw.oa.utils.freemarker.CustomFreeMarkerConfigurer">
+		<property name="templateLoaderPath" value="/view/ftl/" />
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="template_update_delay">0</prop>
+				<prop key="default_encoding">UTF-8</prop>
+				<prop key="number_format">0.##########</prop>
+				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+				<prop key="classic_compatible">true</prop>
+				<prop key="template_exception_handler">ignore</prop>
+			</props>
+		</property>
+	</bean>-->
+    <!-- spring 整合mybatis -->
+    <bean id="propertyConfig" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    	<property name="locations">
+    		<list>
+    			<value>classpath:dbconfig.properties</value>
+    		</list>
+    	</property>
+    </bean>
+    <bean id="datasource" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close"> 
+    	<!-- 数据库基本信息配置 -->
+		<property name="url" value="${url}" />
+		<property name="username" value="${username}" />
+		<property name="password" value="${password}" />
+		<property name="driverClassName" value="${driverClassName}" />
+		<property name="filters" value="${filters}" />
+		<!-- 最大并发连接数 -->
+		<property name="maxActive" value="${maxActive}" />
+		<!-- 初始化连接数量 -->
+		<property name="initialSize" value="${initialSize}" />
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="${maxWait}" />
+		<!-- 最小空闲连接数 -->
+		<property name="minIdle" value="${minIdle}" />
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="${timeBetweenEvictionRunsMillis}" />
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="${minEvictableIdleTimeMillis}" />
+		<property name="validationQuery" value="${validationQuery}" />
+		<property name="testWhileIdle" value="${testWhileIdle}" />
+		<property name="testOnBorrow" value="${testOnBorrow}" />
+		<property name="testOnReturn" value="${testOnReturn}" />
+		<property name="maxOpenPreparedStatements" value="${maxOpenPreparedStatements}" />
+		<!-- 打开removeAbandoned功能 -->
+		<property name="removeAbandoned" value="${removeAbandoned}" />
+		<!-- 1800秒，也就是30分钟 -->
+		<property name="removeAbandonedTimeout" value="${removeAbandonedTimeout}" />
+		<!-- 关闭abanded连接时输出错误日志 -->
+		<property name="logAbandoned" value="${logAbandoned}" />
+    </bean>
+    <bean id="sqlsessionfactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    	<property name="dataSource" ref="datasource"></property>
+    	<property name="mapperLocations" value="classpath:mybatis/*Mapper.xml"></property>
+    	<property name="configLocation" value="classpath:mybatis/Configuration.xml"></property>
+    </bean>
+    <!-- 事务管理 -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    	<property name="basePackage" value="com.klw.oa.dao"></property>
+    	<property name="sqlSessionFactoryBeanName" value="sqlsessionfactory"></property>
+    </bean>
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    	<property name="dataSource" ref="datasource"></property>
+    </bean>
+    <bean id="logaspect" class="com.klw.oa.aop.LogAop"></bean>
+    <tx:advice id="myadvice" transaction-manager="transactionManager">
+    	<tx:attributes>
+    		<tx:method name="del*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+    		<tx:method name="add*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+    		<tx:method name="edit*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
+    	</tx:attributes>
+    </tx:advice>
+    <aop:config>
+    	<aop:pointcut expression="execution(* com.klw.oa.service..*(..))" id="mycut"/>
+    	<aop:advisor advice-ref="myadvice" pointcut-ref="mycut"/>
+		<aop:aspect id="logaop" ref="logaspect">
+			<aop:before method="before" pointcut-ref="mycut"/>
+			<aop:after method="after" pointcut-ref="mycut"/>
+			<aop:after-returning method="afterReturn" pointcut-ref="mycut" returning="value"/>
+		</aop:aspect>
+   	</aop:config>
+	<!-- <bean id="dateFormat" class="java.text.SimpleDateFormat">
+		<constructor-arg value="yyyy-MM-dd"></constructor-arg>
+	</bean>
+	<bean id="pro" class="com.klw.oa.entity.Profession">
+		<property name="createDate">
+			<bean factory-bean="dateFormat" factory-method="parse">
+				<constructor-arg value="2011-11-11"></constructor-arg>
+			</bean>
+		</property>
+	</bean>
+    <bean id="cls" class="com.klw.oa.entity.Classes"> 
+    	<property name="classname" value="java106"></property>
+    	<property name="pros" ref="pro"></property>
+    </bean> -->
+
+</beans>

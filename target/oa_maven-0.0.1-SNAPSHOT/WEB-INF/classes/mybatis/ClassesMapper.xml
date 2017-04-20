@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+ "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.klw.oa.dao.ClassesMapper">
+  <resultMap id="BaseResultMap" type="com.klw.oa.entity.Classes">
+    <id column="classid" jdbcType="INTEGER" property="classid" />
+    <result column="classname" jdbcType="VARCHAR" property="classname" />
+    <result column="classdesc" jdbcType="VARCHAR" property="classdesc" />
+    <result column="createdate" jdbcType="DATE" property="createDate" />
+    <result column="enddate" jdbcType="DATE" property="enddate" />
+    <association column="prosid" property="pros" javaType="com.klw.oa.entity.Profession" select="com.klw.oa.dao.ProfessionMapper.selectByPrimaryKey"></association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    classid, classname, classdesc, prosid, createdate, enddate
+  </sql>
+  
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from classes
+    where classname = #{classname,jdbcType=VARCHAR}
+  </select>
+  <select id="countByClasses" parameterType="map"  resultType="int">
+    select count(*)
+    from classes
+    <where> 
+	    <if test="classesCriteria!= null and classesCriteria.pros!=null and classesCriteria.pros.prosid !=null and classesCriteria.pros.prosid !=0">
+	         prosid=#{classesCriteria.pros.prosid}
+	    </if> 
+	    <if test="classesCriteria!= null and classesCriteria.createDate!=null ">
+	       and  enddate &gt;= #{classesCriteria.createDate}
+	    </if> 
+	    <if test="classesCriteria!= null and classesCriteria.enddate!=null ">
+	      and   enddate  &lt;= #{classesCriteria.enddate}
+	    </if>  
+    </where>
+    order by classid asc
+  </select>
+  <select id="selectAllByPage" parameterType="map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from classes
+   	<where> 
+	    <if test="classesCriteria!= null and classesCriteria.pros!=null and classesCriteria.pros.prosid !=null and classesCriteria.pros.prosid !=0">
+	         prosid=#{classesCriteria.pros.prosid}
+	    </if> 
+	    <if test="classesCriteria!= null and classesCriteria.createDate!=null ">
+	       and  enddate &gt;= #{classesCriteria.createDate}
+	    </if> 
+	    <if test="classesCriteria!= null and classesCriteria.enddate!=null ">
+	      and   enddate  &lt;= #{classesCriteria.enddate}
+	    </if>  
+    </where>
+    order by classid limit #{pageIndex},#{pageSize}
+  </select>
+  <!-- 根据专业和时间来查询由教师带课班级 -->
+  <select id="selectAllByCls" parameterType="map" resultMap="BaseResultMap">
+    select 
+    distinct c.classname,c.prosid,c.createdate,c.enddate as enddate ,c.classid from classes c,techcls tc 
+    where c.classid=tc.classid
+	    <if test="classesCriteria!= null and classesCriteria.pros!=null and classesCriteria.pros.prosid !=null and classesCriteria.pros.prosid !=0">
+	       and  c.prosid=#{classesCriteria.pros.prosid}
+	    </if> 
+	    <if test=" classesCriteria!= null and classesCriteria.createDate!=null ">
+	       and  c.enddate &gt;= #{classesCriteria.createDate}
+	    </if> 
+	    <if test="classesCriteria!= null and classesCriteria.enddate!=null ">
+	      and   c.enddate  &lt;= #{classesCriteria.enddate}
+	    </if> 
+	    
+    order by classid limit #{pageIndex},#{pageSize}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from classes
+    where classid = #{classid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByProsId" parameterType="java.lang.Integer" resultType="int">
+    select 
+    count(*) num
+    from classes
+    where prosid = #{prosid}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from classes
+    where classid = #{classid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.klw.oa.entity.Classes">
+    insert into classes (classid, classname, classdesc, 
+      prosid, createdate, enddate
+      )
+    values (#{classid,jdbcType=INTEGER}, #{classname,jdbcType=VARCHAR}, #{classdesc,jdbcType=VARCHAR}, 
+      #{pros.prosid,jdbcType=INTEGER}, #{createDate,jdbcType=DATE}, #{enddate,jdbcType=DATE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.klw.oa.entity.Classes">
+    insert into classes
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="classid != null">
+        classid,
+      </if>
+      <if test="classname != null">
+        classname,
+      </if>
+      <if test="classdesc != null">
+        classdesc,
+      </if>
+      <if test="pros.prosid != null">
+        prosid,
+      </if>
+      <if test="createDate != null">
+        createdate,
+      </if>
+      <if test="enddate != null">
+        enddate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="classid != null">
+        #{classid,jdbcType=INTEGER},
+      </if>
+      <if test="classname != null">
+        #{classname,jdbcType=VARCHAR},
+      </if>
+      <if test="classdesc != null">
+        #{classdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="pros.prosid != null">
+        #{pros.prosid,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="enddate != null">
+        #{enddate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.klw.oa.entity.Classes">
+    update classes
+    <set>
+      <if test="classname != null">
+        classname = #{classname,jdbcType=VARCHAR},
+      </if>
+      <if test="classdesc != null">
+        classdesc = #{classdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="pros.prosid != null">
+        prosid = #{pros.prosid,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null">
+        createdate = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="enddate != null">
+        enddate = #{enddate,jdbcType=DATE},
+      </if>
+    </set>
+    where classid = #{classid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.klw.oa.entity.Classes">
+    update classes
+    set classname = #{classname,jdbcType=VARCHAR},
+      classdesc = #{classdesc,jdbcType=VARCHAR},
+      prosid = #{pros.prosid,jdbcType=INTEGER},
+      createdate = #{createDate,jdbcType=DATE},
+      enddate = #{enddate,jdbcType=DATE}
+    where classid = #{classid,jdbcType=INTEGER}
+  </update>
+</mapper>

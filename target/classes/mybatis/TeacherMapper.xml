@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.klw.oa.dao.TeacherMapper">
+  <resultMap id="BaseResultMap" type="com.klw.oa.entity.Teacher">
+    <id column="techid" jdbcType="INTEGER" property="techid" />
+    <result column="techname" jdbcType="CHAR" property="techname" />
+    <result column="gender" jdbcType="CHAR" property="gender" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    techid, techname, gender, age
+  </sql>
+ 
+  <select id="countByCriteriaTech" parameterType="com.klw.oa.entity.Teacher"  resultType="int">
+    select count(*)
+    from teacher
+    <where> 
+	    <if test="techname != null">
+        techname like "%" #{techname} "%"
+      </if>
+    </where>
+    order by techid asc
+  </select>
+  <select id="selectAllByPage" parameterType="map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from teacher
+   	<where> 
+	    <if test="teacherCriteria.techname!=null and teacherCriteria.techname !=''">
+	         techname like "%" #{teacherCriteria.techname} "%"
+	    </if> 
+    </where>
+    order by techid limit #{pageIndex},#{pageSize}
+  </select>
+  <select id="selectAll" parameterType="map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from teacher
+   	
+    order by techid 
+  </select>
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from teacher
+    where techname = #{techname,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from teacher
+    where techid = #{techid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from teacher
+    where techid = #{techid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.klw.oa.entity.Teacher">
+    insert into teacher (techid, techname, gender, 
+      age)
+    values (#{techid,jdbcType=INTEGER}, #{techname,jdbcType=CHAR}, #{gender,jdbcType=CHAR}, 
+      #{age,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.klw.oa.entity.Teacher">
+    insert into teacher
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="techid != null">
+        techid,
+      </if>
+      <if test="techname != null">
+        techname,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="techid != null">
+        #{techid,jdbcType=INTEGER},
+      </if>
+      <if test="techname != null">
+        #{techname,jdbcType=CHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=CHAR},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.klw.oa.entity.Teacher">
+    update teacher
+    <set>
+      <if test="techname != null">
+        techname = #{techname,jdbcType=CHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=CHAR},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=INTEGER},
+      </if>
+    </set>
+    where techid = #{techid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.klw.oa.entity.Teacher">
+    update teacher
+    set techname = #{techname,jdbcType=CHAR},
+      gender = #{gender,jdbcType=CHAR},
+      age = #{age,jdbcType=INTEGER}
+    where techid = #{techid,jdbcType=INTEGER}
+  </update>
+</mapper>

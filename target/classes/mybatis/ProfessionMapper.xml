@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC  "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.klw.oa.dao.ProfessionMapper">
+  <resultMap id="BaseResultMap" type="com.klw.oa.entity.Profession">
+    <id column="prosid" jdbcType="INTEGER" property="prosid" />
+    <result column="prosname" jdbcType="VARCHAR" property="prosname" />
+    <result column="prosdesc" jdbcType="VARCHAR" property="prosdesc" />
+    <result column="createdate" jdbcType="DATE" property="createDate" />
+  </resultMap>
+  <resultMap id="ProResultMap" type="com.klw.oa.entity.Profession">
+    <id column="prosid" jdbcType="INTEGER" property="prosid" />
+    <result column="prosname" jdbcType="VARCHAR" property="prosname" />
+    <result column="prosdesc" jdbcType="VARCHAR" property="prosdesc" />
+    <result column="createdate" jdbcType="DATE" property="createDate" />
+    <collection property="classes" ofType="com.klw.oa.entity.Classes">
+    	<id column="classid" jdbcType="INTEGER" property="classid" />
+	    <result column="classname" jdbcType="VARCHAR" property="classname" />
+	    <result column="classdesc" jdbcType="VARCHAR" property="classdesc" />
+	    <result column="createdate" jdbcType="DATE" property="createDate" />
+	    <result column="enddate" jdbcType="DATE" property="enddate" />
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List">
+    prosid, prosname, prosdesc, createdate
+  </sql>
+  <select id="selectProById" parameterType="java.lang.Integer" resultMap="ProResultMap">
+    select profession.*,classes.classid,classes.classdesc,classes.classname,classes.createdate as c_date,
+    classes.enddate from profession LEFT JOIN classes on profession.prosid
+	= classes.prosid where classes.prosid = #{prosid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from profession
+    where prosid = #{prosid,jdbcType=INTEGER}
+  </select>
+  <select id="selectByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from profession
+    where prosname = #{prosname,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAllByPage" parameterType="map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from profession
+   	<where> 
+	    <if test="professionCriteria.prosname!=null and professionCriteria.prosname !=''">
+	         prosname like "%" #{professionCriteria.prosname} "%"
+	    </if> 
+    </where>
+    order by prosid limit #{pageIndex},#{pageNum}
+  </select>
+  <select id="selectAll"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from profession
+    order by prosid asc
+  </select>
+  <select id="countByProfess" parameterType="com.klw.oa.entity.Profession"  resultType="int">
+    select count(*)
+    from profession
+    <where> 
+	    <if test="prosname != null">
+        prosname like "%" #{prosname} "%"
+      </if>
+    </where>
+    order by prosid asc
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from profession
+    where prosid = #{prosid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.klw.oa.entity.Profession">
+    insert into profession (prosid, prosname, prosdesc, 
+      createdate)
+    values (#{prosid,jdbcType=INTEGER}, #{prosname,jdbcType=VARCHAR}, #{prosdesc,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="prosid" parameterType="com.klw.oa.entity.Profession">
+    insert into profession
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="prosid != null">
+        prosid,
+      </if>
+      <if test="prosname != null">
+        prosname,
+      </if>
+      <if test="prosdesc != null">
+        prosdesc,
+      </if>
+      <if test="createDate != null">
+        createdate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="prosid != null">
+        #{prosid,jdbcType=INTEGER},
+      </if>
+      <if test="prosname != null">
+        #{prosname,jdbcType=VARCHAR},
+      </if>
+      <if test="prosdesc != null">
+        #{prosdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.klw.oa.entity.Profession">
+    update profession
+    <set>
+      <if test="prosname != null">
+        prosname = #{prosname,jdbcType=VARCHAR},
+      </if>
+      <if test="prosdesc != null">
+        prosdesc = #{prosdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        createdate = #{createDate,jdbcType=DATE},
+      </if>
+    </set>
+    where prosid = #{prosid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.klw.oa.entity.Profession">
+    update profession
+    set prosname = #{prosname,jdbcType=VARCHAR},
+      prosdesc = #{prosdesc,jdbcType=VARCHAR},
+      createdate = #{createDate,jdbcType=DATE}
+    where prosid = #{prosid,jdbcType=INTEGER}
+  </update>
+</mapper>
