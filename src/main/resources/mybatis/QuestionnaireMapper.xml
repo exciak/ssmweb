@@ -21,7 +21,6 @@
     <collection property="questions" ofType="com.klw.oa.entity.Question">
       <id column="question_id" jdbcType="INTEGER" property="questionId" />
       <result column="question_name" jdbcType="VARCHAR" property="questionName" />
-      <result column="questionnaire_id" jdbcType="VARCHAR" property="questionnaireId" />
       <result column="question_type" jdbcType="VARCHAR" property="questionType" />
       <result column="question_selection" jdbcType="LONGVARCHAR" property="questionSelection" />
     </collection>
