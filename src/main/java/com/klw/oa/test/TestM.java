@@ -1,15 +1,18 @@
 package com.klw.oa.test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.klw.oa.entity.Question;
+import com.klw.oa.entity.Questionnaire;
+import com.klw.oa.service.QuestionService;
+import com.klw.oa.service.QuestionnaireService;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.klw.oa.entity.Classes;
 import com.klw.oa.entity.Profession;
-import com.klw.oa.service.ClassesService;
 import com.klw.oa.service.DeptService;
 import com.klw.oa.serviceImpl.ProfessionServiceImpl;
 
@@ -21,12 +24,36 @@ public class TestM {
         ApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring/spring.xml");
 
 
-        ClassesService cls = context.getBean("techClsService", ClassesService.class);
+        /*QuestionnaireService questionnaireService = context.getBean("QuestionnaireServiceImpl",QuestionnaireService.class);
 
-        List<Classes> clses = cls.getClassesByCls(null, 0, 2);
-        for (Classes classes : clses) {
-            System.out.println(classes);
-        }
+        Questionnaire questionnaire = new Questionnaire();
+
+        questionnaire.setQuestionnaireName(null);
+
+       List<Questionnaire> questionnaires  = questionnaireService.getAllComplexByPage(questionnaire,0,3);
+
+        for (Questionnaire q:questionnaires
+             ) {
+            System.out.println(q);
+
+        }*/
+       /* QuestionService questionService = context.getBean("QuestionServiceImpl",QuestionService.class);
+
+        Question question = questionService.getById(1);
+
+        System.out.println(question);*/
+        List<Question> questionList = new ArrayList<Question>();
+        Question question1 = new Question(1,2,"k","k","k");
+        Question question2 = new Question(3,2,"k","l","f");
+
+        questionList.add(question1);
+        questionList.add(question2);
+
+        QuestionService questionService = context.getBean("QuestionServiceImpl",QuestionService.class);
+
+        int i = questionService.editQuestions(questionList);
+
+        System.out.println(i);
     }
 
     @Test
@@ -78,12 +105,12 @@ public class TestM {
         ApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring/spring.xml");
 
 
-        DeptService ds = context.getBean("deptSer", DeptService.class);
+        /*DeptService ds = context.getBean("deptSer", DeptService.class);
 
         List<Map<Object, Object>> list = ds.getAllMap();
         for (Map<Object, Object> map : list) {
             System.out.println(map);
-        }
+        }*/
 
 		/*ClassesService cls = context.getBean("clsService",ClassesService.class);
 		Classes clsses = new Classes();
@@ -92,6 +119,18 @@ public class TestM {
 		for (Classes classes : clses) {
 			System.out.println(classes);
 		}*/
+		List<Question> questionList = new ArrayList<Question>();
+		Question question1 = new Question(1,2,"k","k","k");
+		Question question2 = new Question(3,2,"k","l","f");
+
+		questionList.add(question1);
+		questionList.add(question2);
+
+		QuestionService questionService = context.getBean("QuestionServiceImpl",QuestionService.class);
+
+		int i = questionService.editQuestions(questionList);
+
+        System.out.println(i);
     }
 
 }

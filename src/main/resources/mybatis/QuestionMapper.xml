@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.klw.oa.dao.QuestionMapper">
+  <resultMap id="BaseResultMap" type="com.klw.oa.entity.Question">
+    <id column="question_id" jdbcType="INTEGER" property="questionId" />
+    <result column="question_name" jdbcType="VARCHAR" property="questionName" />
+    <result column="question_type" jdbcType="VARCHAR" property="questionType" />
+    <result column="questionnaire_id" jdbcType="VARCHAR" property="questionnaireId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.klw.oa.entity.Question">
+    <result column="question_selection" jdbcType="LONGVARCHAR" property="questionSelection" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    question_id, question_name, question_type,questionnaire_id
+  </sql>
+  <sql id="Blob_Column_List">
+    question_selection
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from question
+    where question_id = #{questionId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from question
+    where question_id = #{questionId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.klw.oa.entity.Question">
+    insert into question (question_id, question_name, question_type, 
+      question_selection)
+    values (#{questionId,jdbcType=INTEGER}, #{questionName,jdbcType=VARCHAR}, #{questionType,jdbcType=VARCHAR}, 
+      #{questionSelection,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.klw.oa.entity.Question">
+    insert into question
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="questionId != null">
+        question_id,
+      </if>
+      <if test="questionName != null">
+        question_name,
+      </if>
+      <if test="questionType != null">
+        question_type,
+      </if>
+      <if test="questionSelection != null">
+        question_selection,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="questionId != null">
+        #{questionId,jdbcType=INTEGER},
+      </if>
+      <if test="questionName != null">
+        #{questionName,jdbcType=VARCHAR},
+      </if>
+      <if test="questionType != null">
+        #{questionType,jdbcType=VARCHAR},
+      </if>
+      <if test="questionSelection != null">
+        #{questionSelection,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.klw.oa.entity.Question">
+    update question
+    <set>
+      <if test="questionName != null">
+        question_name = #{questionName,jdbcType=VARCHAR},
+      </if>
+      <if test="questionType != null">
+        question_type = #{questionType,jdbcType=VARCHAR},
+      </if>
+      <if test="questionSelection != null">
+        question_selection = #{questionSelection,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where question_id = #{questionId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.klw.oa.entity.Question">
+    update question
+    set question_name = #{questionName,jdbcType=VARCHAR},
+      question_type = #{questionType,jdbcType=VARCHAR},
+      question_selection = #{questionSelection,jdbcType=LONGVARCHAR}
+    where question_id = #{questionId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.klw.oa.entity.Question">
+    update question
+    set question_name = #{questionName,jdbcType=VARCHAR},
+      question_type = #{questionType,jdbcType=VARCHAR}
+    where question_id = #{questionId,jdbcType=INTEGER}
+  </update>
+  <!--批量更新问题-->
+  <update id="batchUpdateQuestions" parameterType="java.util.List">
+    <foreach close="" collection="list" index="index" item="item" open="" separator=";">
+      update question
+      <set>
+        <if test="item.questionName != null">
+          question_name = #{item.questionName,jdbcType=VARCHAR},
+        </if>
+        <if test="item.questionType != null">
+          question_type = #{item.questionType,jdbcType=VARCHAR},
+        </if>
+        <if test="item.questionnaireId != null">
+          questionnaire_id = #{item.questionnaireId,jdbcType=INTEGER},
+        </if>
+        <if test="item.questionSelection != null">
+          question_selection = #{item.questionSelection,jdbcType=LONGVARCHAR},
+        </if>
+      </set>
+      where question_id = #{item.questionId,jdbcType=INTEGER}
+    </foreach>
+  </update>
+</mapper>

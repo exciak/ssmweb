@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.klw.oa.dao.QuestionnaireAnswerMapper">
+  <resultMap id="BaseResultMap" type="com.klw.oa.entity.QuestionnaireAnswer">
+    <id column="questionnaire_answerid" jdbcType="INTEGER" property="questionnaireAnswerid" />
+    <result column="questionnaire_id" jdbcType="INTEGER" property="questionnaireId" />
+    <result column="count_answer" jdbcType="BIGINT" property="countAnswer" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    questionnaire_answerid, questionnaire_id, count_answer
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from questionnaire_answer
+    where questionnaire_answerid = #{questionnaireAnswerid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from questionnaire_answer
+    where questionnaire_answerid = #{questionnaireAnswerid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.klw.oa.entity.QuestionnaireAnswer">
+    insert into questionnaire_answer (questionnaire_answerid, questionnaire_id, 
+      count_answer)
+    values (#{questionnaireAnswerid,jdbcType=INTEGER}, #{questionnaireId,jdbcType=INTEGER}, 
+      #{countAnswer,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.klw.oa.entity.QuestionnaireAnswer">
+    insert into questionnaire_answer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="questionnaireAnswerid != null">
+        questionnaire_answerid,
+      </if>
+      <if test="questionnaireId != null">
+        questionnaire_id,
+      </if>
+      <if test="countAnswer != null">
+        count_answer,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="questionnaireAnswerid != null">
+        #{questionnaireAnswerid,jdbcType=INTEGER},
+      </if>
+      <if test="questionnaireId != null">
+        #{questionnaireId,jdbcType=INTEGER},
+      </if>
+      <if test="countAnswer != null">
+        #{countAnswer,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.klw.oa.entity.QuestionnaireAnswer">
+    update questionnaire_answer
+    <set>
+      <if test="questionnaireId != null">
+        questionnaire_id = #{questionnaireId,jdbcType=INTEGER},
+      </if>
+      <if test="countAnswer != null">
+        count_answer = #{countAnswer,jdbcType=BIGINT},
+      </if>
+    </set>
+    where questionnaire_answerid = #{questionnaireAnswerid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.klw.oa.entity.QuestionnaireAnswer">
+    update questionnaire_answer
+    set questionnaire_id = #{questionnaireId,jdbcType=INTEGER},
+      count_answer = #{countAnswer,jdbcType=BIGINT}
+    where questionnaire_answerid = #{questionnaireAnswerid,jdbcType=INTEGER}
+  </update>
+</mapper>
