@@ -19,7 +19,7 @@
       <property name="forceBigDecimals" value="false" />
     </javaTypeResolver>
 
-    <javaModelGenerator targetPackage="entity" targetProject="E:\workspace\ssmweb\src\main\java\com\klw\oa">
+    <javaModelGenerator targetPackage="com.klw.oa.entity" targetProject="E:\workspace\ssmweb\src\main\java">
       <property name="enableSubPackages" value="true" />
       <property name="trimStrings" value="true" />
     </javaModelGenerator>
@@ -28,18 +28,42 @@
       <property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
 
-    <javaClientGenerator type="XMLMAPPER" targetPackage="dao"  targetProject="E:\workspace\ssmweb\src\main\java\com\klw\oa">
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.klw.oa.dao"  targetProject="E:\workspace\ssmweb\src\main\java">
       <property name="enableSubPackages" value="true" />
     </javaClientGenerator>
 
+
     <table  tableName="user" domainObjectName="User"
-    enableDeleteByExample="false" enableSelectByExample="false"
-     enableUpdateByExample="false" selectByExampleQueryId="false"
-     enableCountByExample="false">
+            enableDeleteByExample="false" enableSelectByExample="false"
+            enableUpdateByExample="false" selectByExampleQueryId="false"
+            enableCountByExample="false">
       <property name="useActualColumnNames" value="false"/>
-      <!-- <columnOverride column="createdate" property="createDate" /> -->
     </table>
-    <table  tableName="test" domainObjectName="Test"
+    <!--<table  tableName="questionnaire_answer" domainObjectName="QuestionnaireAnswer"
+            enableDeleteByExample="false" enableSelectByExample="false"
+            enableUpdateByExample="false" selectByExampleQueryId="false"
+            enableCountByExample="false">
+      <property name="useActualColumnNames" value="false"/>
+    </table>-->
+    <!--<table  tableName="question" domainObjectName="Question"
+            enableDeleteByExample="false" enableSelectByExample="false"
+            enableUpdateByExample="false" selectByExampleQueryId="false"
+            enableCountByExample="false">
+      <property name="useActualColumnNames" value="false"/>
+    </table>-->
+    <!--<table  tableName="questionnaire" domainObjectName="Questionnaire"
+            enableDeleteByExample="false" enableSelectByExample="false"
+            enableUpdateByExample="false" selectByExampleQueryId="false"
+            enableCountByExample="false">
+      <property name="useActualColumnNames" value="false"/>
+    </table>-->
+    <!--<table  tableName="question_answer" domainObjectName="QuestionAnswer"
+            enableDeleteByExample="false" enableSelectByExample="false"
+            enableUpdateByExample="false" selectByExampleQueryId="false"
+            enableCountByExample="false">
+      <property name="useActualColumnNames" value="false"/>
+    </table>-->
+    <table  tableName="question_answercount" domainObjectName="QuestionAnswerCount"
             enableDeleteByExample="false" enableSelectByExample="false"
             enableUpdateByExample="false" selectByExampleQueryId="false"
             enableCountByExample="false">
