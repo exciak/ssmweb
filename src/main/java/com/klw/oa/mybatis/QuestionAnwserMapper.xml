@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.klw.oa.dao.QuestionAnwserMapper">
+  <resultMap id="BaseResultMap" type="com.klw.oa.entity.QuestionAnwser">
+    <id column="question_answerid" jdbcType="INTEGER" property="questionAnswerid" />
+    <result column="question_id" jdbcType="INTEGER" property="questionId" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="questionnaire_id" jdbcType="INTEGER" property="questionnaireId" />
+    <result column="group_number" jdbcType="BIGINT" property="groupNumber" />
+    <result column="question_type" jdbcType="VARCHAR" property="questionType" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    question_answerid, question_id, description, questionnaire_id, group_number, question_type
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from question_answer
+    where question_answerid = #{questionAnswerid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from question_answer
+    where question_answerid = #{questionAnswerid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.klw.oa.entity.QuestionAnwser">
+    insert into question_answer (question_answerid, question_id, description, 
+      questionnaire_id, group_number, question_type
+      )
+    values (#{questionAnswerid,jdbcType=INTEGER}, #{questionId,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, 
+      #{questionnaireId,jdbcType=INTEGER}, #{groupNumber,jdbcType=BIGINT}, #{questionType,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.klw.oa.entity.QuestionAnwser">
+    insert into question_answer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="questionAnswerid != null">
+        question_answerid,
+      </if>
+      <if test="questionId != null">
+        question_id,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="questionnaireId != null">
+        questionnaire_id,
+      </if>
+      <if test="groupNumber != null">
+        group_number,
+      </if>
+      <if test="questionType != null">
+        question_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="questionAnswerid != null">
+        #{questionAnswerid,jdbcType=INTEGER},
+      </if>
+      <if test="questionId != null">
+        #{questionId,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="questionnaireId != null">
+        #{questionnaireId,jdbcType=INTEGER},
+      </if>
+      <if test="groupNumber != null">
+        #{groupNumber,jdbcType=BIGINT},
+      </if>
+      <if test="questionType != null">
+        #{questionType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.klw.oa.entity.QuestionAnwser">
+    update question_answer
+    <set>
+      <if test="questionId != null">
+        question_id = #{questionId,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="questionnaireId != null">
+        questionnaire_id = #{questionnaireId,jdbcType=INTEGER},
+      </if>
+      <if test="groupNumber != null">
+        group_number = #{groupNumber,jdbcType=BIGINT},
+      </if>
+      <if test="questionType != null">
+        question_type = #{questionType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where question_answerid = #{questionAnswerid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.klw.oa.entity.QuestionAnwser">
+    update question_answer
+    set question_id = #{questionId,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      questionnaire_id = #{questionnaireId,jdbcType=INTEGER},
+      group_number = #{groupNumber,jdbcType=BIGINT},
+      question_type = #{questionType,jdbcType=VARCHAR}
+    where question_answerid = #{questionAnswerid,jdbcType=INTEGER}
+  </update>
+</mapper>

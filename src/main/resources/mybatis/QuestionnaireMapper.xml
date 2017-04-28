@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.klw.oa.dao.QuestionnaireMapper">
+  <resultMap id="BaseResultMap" type="com.klw.oa.entity.Questionnaire">
+    <id column="questionnaire_id" jdbcType="INTEGER" property="questionnaireId" />
+    <result column="questionnaire_name" jdbcType="VARCHAR" property="questionnaireName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="questionnaire_type" jdbcType="VARCHAR" property="questionnaireType" />
+    <result column="questionnaire_catalog" jdbcType="VARCHAR" property="questionnaireCatalog" />
+    <result column="create_id" jdbcType="INTEGER" property="createId" />
+  </resultMap>
+  <resultMap id="QuestionsResultMap" type="com.klw.oa.entity.Questionnaire">
+    <id column="questionnaire_id" jdbcType="INTEGER" property="questionnaireId" />
+    <result column="questionnaire_name" jdbcType="VARCHAR" property="questionnaireName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="questionnaire_type" jdbcType="VARCHAR" property="questionnaireType" />
+    <result column="questionnaire_catalog" jdbcType="VARCHAR" property="questionnaireCatalog" />
+    <result column="create_id" jdbcType="INTEGER" property="createId" />
+    <collection property="questions" ofType="com.klw.oa.entity.Question">
+      <id column="question_id" jdbcType="INTEGER" property="questionId" />
+      <result column="question_name" jdbcType="VARCHAR" property="questionName" />
+      <result column="question_type" jdbcType="VARCHAR" property="questionType" />
+      <result column="question_selection" jdbcType="LONGVARCHAR" property="questionSelection" />
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List">
+    questionnaire_id, questionnaire_name, create_time, update_time, questionnaire_type, 
+    questionnaire_catalog, create_id
+  </sql>
+  <!--通过Id获取复杂的问卷对象-->
+  <select id="selectComplexById" parameterType="java.lang.Integer" resultMap="QuestionsResultMap">
+    select qn.*,q.question_id,q.question_name,q.question_selection,q.question_type from
+     questionnaire qn LEFT JOIN question q on qn.questionnaire_id = q.questionnaire_id
+      where qn.questionnaire_id = #{questionnaireId,jdbcType=INTEGER}
+  </select>
+  <!--根据查询条件获取全部的复杂问卷对象-->
+  <select id="selectComplexByPage" parameterType="map" resultMap="QuestionsResultMap">
+    select qn.*,q.question_id,q.question_name,q.question_selection,q.question_type,q.questionnaire_id questionnaire_id from
+    questionnaire qn LEFT JOIN question q on qn.questionnaire_id = q.questionnaire_id
+    <where>
+      <if test="questionnaireCriteria != null and questionnaireCriteria.questionnaireName!=null and questionnaireCriteria.questionnaireName !=''">
+        qn.questionnaire_name like "%" #{questionnaireCriteria.questionnaireName} "%"
+      </if>
+    </where>
+    order by q.questionnaire_id limit #{pageIndex},#{pageNum}
+  </select>
+  <!--通过名称进行模糊 查询-->
+  <select id="selectAllByPage" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from questionnaire
+    <where>
+      <if test="questionnaireCriteria != null and questionnaireCriteria.questionnaireName!=null and questionnaireCriteria.questionnaireName !=''">
+        questionnaire_name like "%" #{questionnaireCriteria.questionnaireName} "%"
+      </if>
+    </where>
+    order by questionnaire_id limit #{pageIndex},#{pageNum}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from questionnaire
+    where questionnaire_id = #{questionnaireId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from questionnaire
+    where questionnaire_id = #{questionnaireId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.klw.oa.entity.Questionnaire">
+    insert into questionnaire (questionnaire_id, questionnaire_name, 
+      create_time, update_time, questionnaire_type, 
+      questionnaire_catalog, create_id)
+    values (#{questionnaireId,jdbcType=INTEGER}, #{questionnaireName,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{questionnaireType,jdbcType=VARCHAR}, 
+      #{questionnaireCatalog,jdbcType=VARCHAR}, #{createId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.klw.oa.entity.Questionnaire">
+    insert into questionnaire
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="questionnaireId != null">
+        questionnaire_id,
+      </if>
+      <if test="questionnaireName != null">
+        questionnaire_name,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="questionnaireType != null">
+        questionnaire_type,
+      </if>
+      <if test="questionnaireCatalog != null">
+        questionnaire_catalog,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="questionnaireId != null">
+        #{questionnaireId,jdbcType=INTEGER},
+      </if>
+      <if test="questionnaireName != null">
+        #{questionnaireName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="questionnaireType != null">
+        #{questionnaireType,jdbcType=VARCHAR},
+      </if>
+      <if test="questionnaireCatalog != null">
+        #{questionnaireCatalog,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.klw.oa.entity.Questionnaire">
+    update questionnaire
+    <set>
+      <if test="questionnaireName != null">
+        questionnaire_name = #{questionnaireName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="questionnaireType != null">
+        questionnaire_type = #{questionnaireType,jdbcType=VARCHAR},
+      </if>
+      <if test="questionnaireCatalog != null">
+        questionnaire_catalog = #{questionnaireCatalog,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where questionnaire_id = #{questionnaireId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.klw.oa.entity.Questionnaire">
+    update questionnaire
+    set questionnaire_name = #{questionnaireName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      questionnaire_type = #{questionnaireType,jdbcType=VARCHAR},
+      questionnaire_catalog = #{questionnaireCatalog,jdbcType=VARCHAR},
+      create_id = #{createId,jdbcType=INTEGER}
+    where questionnaire_id = #{questionnaireId,jdbcType=INTEGER}
+  </update>
+</mapper>
