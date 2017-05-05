@@ -50,7 +50,7 @@
       <if test="realName != null">
         real_name,
       </if>
-      <if test="user.userId != null">
+      <if test="user != null and user.userId != null">
         user.user_id,
       </if>
     </trim>
@@ -67,7 +67,7 @@
       <if test="realName != null">
         #{realName,jdbcType=VARCHAR},
       </if>
-      <if test="user.userId != null">
+      <if test="user != null and user.userId != null">
         #{user.userId,jdbcType=INTEGER},
       </if>
     </trim>
@@ -84,7 +84,7 @@
       <if test="realName != null">
         real_name = #{realName,jdbcType=VARCHAR},
       </if>
-      <if test="user.userId != null">
+      <if test="user != null and user.userId != null">
         user_id = #{user.userId,jdbcType=INTEGER},
       </if>
     </set>

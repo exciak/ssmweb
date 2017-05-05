@@ -129,9 +129,16 @@ public class FileController {
                         String name = fileItem.getName();
                         name= FileUtils.getFileName(name.substring(name.lastIndexOf(".")));
                         realName = name;
-                        String path = request.getServletContext().getRealPath("upload\\");
+                        String path = request.getServletContext().getRealPath("/upload/"+name);
                         System.out.println(path);
-                        File file = new File(path+"\\"+name);
+                        File file = new File(path);
+                        if(!file.getParentFile().exists()) {
+                            //如果目标文件所在的目录不存在，则创建父目录
+                            System.out.println("目标文件所在目录不存在，准备创建它！");
+                            if(!file.getParentFile().mkdirs()) {
+                                System.out.println("创建目标文件所在目录失败！");
+                            }
+                        }
                         file.createNewFile();
                         FileOutputStream fos = new FileOutputStream(file);
                         byte [] b = new byte[1024];
