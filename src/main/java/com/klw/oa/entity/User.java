@@ -1,5 +1,8 @@
 package com.klw.oa.entity;
 
+import javax.persistence.Entity;
+
+@Entity(name = "user")
 public class User {
     private Integer userId;
 

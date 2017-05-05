@@ -33,7 +33,13 @@
     </javaClientGenerator>
 
 
-    <table  tableName="user" domainObjectName="User"
+    <!--<table  tableName="user" domainObjectName="User"
+            enableDeleteByExample="false" enableSelectByExample="false"
+            enableUpdateByExample="false" selectByExampleQueryId="false"
+            enableCountByExample="false">
+      <property name="useActualColumnNames" value="false"/>
+    </table>-->
+    <table  tableName="myfile" domainObjectName="Myfile"
             enableDeleteByExample="false" enableSelectByExample="false"
             enableUpdateByExample="false" selectByExampleQueryId="false"
             enableCountByExample="false">
@@ -63,13 +69,13 @@
             enableCountByExample="false">
       <property name="useActualColumnNames" value="false"/>
     </table>-->
-    <table  tableName="question_answercount" domainObjectName="QuestionAnswerCount"
+    <!--<table  tableName="question_answercount" domainObjectName="QuestionAnswerCount"
             enableDeleteByExample="false" enableSelectByExample="false"
             enableUpdateByExample="false" selectByExampleQueryId="false"
             enableCountByExample="false">
       <property name="useActualColumnNames" value="false"/>
-      <!-- <columnOverride column="createdate" property="createDate" /> -->
-    </table>
+      &lt;!&ndash; <columnOverride column="createdate" property="createDate" /> &ndash;&gt;
+    </table>-->
 
   </context>
 </generatorConfiguration>
