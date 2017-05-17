@@ -15,6 +15,13 @@
   <sql id="Base_Column_List">
     user_id, user_name, is_admin, address, tel, email, password, sex, head
   </sql>
+  <!--通过名字获取-->
+  <select id="selectByUserName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where user_name = #{user_name,jdbcType=VARCHAR}
+  </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -35,7 +42,7 @@
       #{password,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{head,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.klw.oa.entity.User">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="userId" parameterType="com.klw.oa.entity.User">
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">

@@ -14,4 +14,8 @@ public interface QuestionnaireService {
     List<Questionnaire> getAllComplexByPage(Questionnaire questionnaire, int pageIndex, int pageNum);
 
     Questionnaire getComplexById(Integer questionnaireId);
+
+    Integer addQuestionnaire(Questionnaire questionnaire);
+
+    String createQuestionnaireWithQuestion(Questionnaire questionnaire);
 }
