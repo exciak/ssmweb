@@ -49,6 +49,9 @@
       <if test="questionSelection != null">
         question_selection,
       </if>
+      <if test="questionnaireId != null">
+        questionnaire_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="questionId != null">
@@ -62,6 +65,9 @@
       </if>
       <if test="questionSelection != null">
         #{questionSelection,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="questionnaireId != null">
+        #{questionnaireId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>

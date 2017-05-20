@@ -17,5 +17,5 @@ public interface QuestionnaireService {
 
     Integer addQuestionnaire(Questionnaire questionnaire);
 
-    String createQuestionnaireWithQuestion(Questionnaire questionnaire);
+    String addQuestionnaireWithQuestion(Questionnaire questionnaire);
 }

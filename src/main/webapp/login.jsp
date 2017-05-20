@@ -21,16 +21,110 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	-->
 	<script type="text/javascript" src = "js/jquery-1.11.1.min.js"></script>
 	  <script type="text/javascript">
+          var preventDefaultFlag = false;
+          var typeCodes = $('#typeCodes').val();
+          var pathname = window.location.pathname;
+          var arr = pathname.split("/");
+          var proName = arr[1];
+          var rootPath = "http://" + window.location.host + "/" + proName;
           if(top.location!=self.location){
               self.location = "${pageContext.request.contextPath}/login.jsp";
           }
-
+/*
           $(document).ready(function (){
               $("#sub").click(function (){
                   return check();
               });
 
-          });
+          });*/
+          var user1 = {
+			"userName":"admisn",
+			  "password":"admin",
+			  "isAdmin":1,
+			  "address":"addr",
+			  "tel":"15757115291",
+			  "sex":"man",
+			  "head":"head",
+			  "email":"em"
+          }
+          $(document).ready(function () {
+              $("#test").click(function () {
+                  $.ajax({
+                      type: "post",
+                      url: rootPath+"/login/doLogin",
+                      data: user1,
+                      dataType: "json",
+                      //contentType: 'application/json;charset=utf-8',
+                      success: function (data) {
+                          if (data.result == "success") {
+                             // location.href = rootPath+"/appsystems";
+                          } else {
+                              dmallError(data.result);
+                          }
+                      },
+                      error: function () {
+                          dmallAjaxError();
+                          $("#btn_commitCreateInfo").attr('disabled', false);
+                      }
+                  })
+              });
+
+              $("#register").click(function () {
+                  $.ajax({
+                      type: "post",
+                      url: rootPath+"/login/register",
+                      data: user1,
+                      dataType: "json",
+                      //contentType: 'application/json;charset=utf-8',
+                      success: function (data) {
+                          if (data.result == "success") {
+                              //location.href = rootPath+"/appsystems";
+                          } else {
+                              dmallError(data.result);
+                          }
+                      },
+                      error: function () {
+                          dmallAjaxError();
+                          $("#btn_commitCreateInfo").attr('disabled', false);
+                      }
+                  })
+              });
+
+              var questionnaireEntity = {
+                  "questionnaireName":"qname",
+				  "questionnaireType":"type",
+				  "questionnaireCatalog":"qCatalog",
+				  "createId":1
+			  };
+			  var questionList = [
+				  {"questionName":"qestName1","questionType":"qType","questionSelection":"qSel1"},
+				  {"questionName":"qestName2","questionType":"qType","questionSelection":"qSel2"},
+				  {"questionName":"qestName3","questionType":"qType","questionSelection":"qSel3"},
+			  ];
+              //问卷添加测试
+              $("#saveQuestionnarie").click(function () {
+                  $.ajax({
+                      type: "post",
+                      url: rootPath+"/questionnaire/create",
+                      data: {"questionnaireEntity":JSON.stringify(questionnaireEntity), "questionList":JSON.stringify(questionList)},
+                      dataType: "json",
+                      //contentType: 'application/json;charset=utf-8',
+                      success: function (data) {
+                          if (data.result == "success") {
+                              //location.href = rootPath+"/appsystems";
+                          } else {
+                              //dmallError(data.result);
+                          }
+                      },
+                      error: function () {
+                          //dmallAjaxError();
+                          $("#btn_commitCreateInfo").attr('disabled', false);
+                      }
+                  })
+              });
+
+
+          })
 
           function check(){
               if($.trim($("#username").val())==""){
@@ -42,12 +136,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   return false;
               }
               var myReg = /^[\u4e00-\u9fa5]+$/;
-              if(myReg.test($.trim($("#vip").val()))){
+             /* if(myReg.test($.trim($("#vip").val()))){
                   return true;
               }else{
                   alert("会员名必须为中文！");
                   return false;
-              }
+              }*/
               return true;
           }
 	  </script>
@@ -75,7 +169,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <div id="log">
 	  <h1>登陆页面</h1>
 
-	  <form action="${pageContext.request.contextPath }/dologin?method=doLogin" method="post">
+	  <form action="${pageContext.request.contextPath }/dologin/login" method="post">
 		  <table cellpadding="4" >
 			  ${pageContext.request.contextPath }
 			  <tr>
@@ -93,13 +187,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			  <tr>
 				  <td><input type="submit" value="登 陆" id="sub"/>&nbsp;&nbsp;</td>
 				  <td><input type="reset" value="重 置" id="re"/>;</td>
+				  <td><button value="teeesss" id="test">adfaa</button></td>
+				  <td><button value="teeesss" id="register">register</button></td>
+				  <td></td>
 			  </tr>
 		  </table>
 
-
-
-
 	  </form>
+	  <button value="as" id="saveQuestionnarie">添加问卷</button>
+
+	  <button value="teeesss" id="updateQuestionnaire">修改问卷</button>
   </div>
   </body>
 </html>

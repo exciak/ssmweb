@@ -4,10 +4,7 @@ import com.klw.oa.entity.User;
 import com.klw.oa.service.UserService;
 import com.klw.oa.utils.JsonUtil;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
@@ -22,7 +19,7 @@ import java.util.Map;
 /**
  * Created by Administrator on 2017/5/17.
  */
-@Controller("LoginController")
+@Controller
 @RequestMapping("/login")
 public class LoginController {
 
@@ -36,18 +33,22 @@ public class LoginController {
      * @return
      */
     @RequestMapping(value = "/doLogin", method= RequestMethod.POST)
-    public String doLogin(HttpServletRequest request, HttpServletResponse response)
+    @ResponseBody
+    public String doLogin(HttpServletRequest request, HttpServletResponse response,
+                          @ModelAttribute User entity,
+                          @RequestParam(value = "username", required = false) String username,
+                          @RequestParam(value = "password", required = false) String password)
              {
 
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        /*String username = request.getParameter("username");
+        String password = request.getParameter("password");*/
         User user = new User();
 
         user.setUserName(username);
         user.setPassword(password);
 
 
-        if(userServiceImpl.loginCheck(user)){
+        if(userServiceImpl.loginCheck(entity)){
             user = userServiceImpl.getUserByName(username);
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
@@ -80,7 +81,8 @@ public class LoginController {
                            @RequestParam(value = "email", required = false) String email,
                            @RequestParam(value = "password", required = false) String password,
                            @RequestParam(value = "sex", required = false) String sex,
-                           @RequestParam(value = "head", required = false) String head)
+                           @RequestParam(value = "head", required = false) String head,
+                           @ModelAttribute User entity)
     {
         Map<String, Object> map = new HashMap<String, Object>();
 
@@ -93,7 +95,7 @@ public class LoginController {
         user.setSex(sex);
         user.setHead(head);
         try {
-            Integer ret = userServiceImpl.addUser(user);
+            Integer ret = userServiceImpl.addUser(entity);
             if(ret == 1){
                 map.put("result", "success");
             }else if(ret == -1){

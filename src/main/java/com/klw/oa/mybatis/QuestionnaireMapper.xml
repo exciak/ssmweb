@@ -32,7 +32,7 @@
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{questionnaireType,jdbcType=VARCHAR}, 
       #{questionnaireCatalog,jdbcType=VARCHAR}, #{createId,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.klw.oa.entity.Questionnaire">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="questionnaireId" parameterType="com.klw.oa.entity.Questionnaire">
     insert into questionnaire
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="questionnaireId != null">

@@ -81,16 +81,16 @@ public class QuestionnaireServiceImpl implements QuestionnaireService{
      * @return
      */
     @Override
-    public String createQuestionnaireWithQuestion(Questionnaire questionnaire) {
+    public String addQuestionnaireWithQuestion(Questionnaire questionnaire) {
         List<Question> questions = questionnaire.getQuestions();
 
         questionnaire.setQuestions(null);
 
-        Integer questionnaireId = addQuestionnaire(questionnaire);
+        addQuestionnaire(questionnaire);
 
         for (Question question:questions
              ) {
-            question.setQuestionnaireId(questionnaireId);
+            question.setQuestionnaireId(questionnaire.getQuestionnaireId());
             questionMapper.insertSelective(question);
         }
 

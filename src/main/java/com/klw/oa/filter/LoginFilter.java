@@ -31,7 +31,7 @@ public class LoginFilter implements Filter {
 		url += qs;
 		System.out.println(url);
 		HttpSession session = request.getSession();
-		if(url.indexOf("login")==-1&&url.indexOf("css")==-1&&url.indexOf("jquery")==-1){
+		/*if(url.indexOf("login")==-1&&url.indexOf("css")==-1&&url.indexOf("jquery")==-1){
 			if(session.getAttribute("user")==null){
 				response.sendRedirect(request.getContextPath()+"/login.jsp");
 				return ;
@@ -40,8 +40,8 @@ public class LoginFilter implements Filter {
 			}
 		}else{
 			arg2.doFilter(request, response);
-		}
-		
+		}*/
+		arg2.doFilter(request, response);
 	}
 
 	@Override
