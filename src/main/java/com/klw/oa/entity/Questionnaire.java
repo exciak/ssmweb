@@ -29,6 +29,18 @@ public class Questionnaire {
 
     private List<Question> questions;
 
+    private String questionnairePrompt;
+
+
+
+
+    public String getQuestionnairePrompt() {
+        return questionnairePrompt;
+    }
+
+    public void setQuestionnairePrompt(String questionnairePrompt) {
+        this.questionnairePrompt = questionnairePrompt;
+    }
 
     public Questionnaire (){
 

@@ -90,7 +90,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   })
               });
 
-              var questionnaireEntity = {
+              /*var questionnaireEntity = {
                   "questionnaireName":"qname",
 				  "questionnaireType":"type",
 				  "questionnaireCatalog":"qCatalog",
@@ -100,7 +100,54 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				  {"questionName":"qestName1","questionType":"qType","questionSelection":"qSel1"},
 				  {"questionName":"qestName2","questionType":"qType","questionSelection":"qSel2"},
 				  {"questionName":"qestName3","questionType":"qType","questionSelection":"qSel3"},
-			  ];
+			  ];*/
+              var questionnaireEntity = {
+                  "questionnaireTitle":"qname",
+                  "questionnaireType":"type",
+                  "questionnairePrompt":"prompt",
+                  "createId":1
+              };
+
+              var questionList = [
+				  {"questionGenre": 0,
+                      "questionTitle": "单选题",
+                      "isNecessary": true,
+                      "isEdit": false,
+                      "questionChoice": [
+                      {
+                          "text": "选项内容1",
+                          "isSelected": false
+                      },
+                      {
+                          "text": "选项内容2",
+                          "isSelected": false
+                      },
+                      {
+                          "text": "选项内容3",
+                          "isSelected": false
+                      }
+                  ]
+              },
+			  {"questionGenre": 0,
+				  "questionTitle": "单选题",
+				  "isNecessary": true,
+				  "isEdit": false,
+				  "questionChoice": [
+					  {
+						  "text": "选项内容1",
+						  "isSelected": false
+					  },
+					  {
+						  "text": "选项内容2",
+						  "isSelected": false
+					  },
+					  {
+						  "text": "选项内容3",
+						  "isSelected": false
+					  }
+				  ]
+			  }
+              ];
               //问卷添加测试
               $("#saveQuestionnarie").click(function () {
                   $.ajax({
@@ -197,6 +244,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  <button value="as" id="saveQuestionnarie">添加问卷</button>
 
 	  <button value="teeesss" id="updateQuestionnaire">修改问卷</button>
+	  <button value="teeesss" id=""></button>
+
+
   </div>
   </body>
 </html>

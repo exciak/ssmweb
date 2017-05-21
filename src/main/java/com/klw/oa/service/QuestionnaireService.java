@@ -1,7 +1,11 @@
 package com.klw.oa.service;
 
+import com.klw.oa.entity.Question;
 import com.klw.oa.entity.Questionnaire;
+import com.klw.oa.entity.model.QuestionRecModel;
+import com.klw.oa.entity.model.QuestionnaireRecModel;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -18,4 +22,8 @@ public interface QuestionnaireService {
     Integer addQuestionnaire(Questionnaire questionnaire);
 
     String addQuestionnaireWithQuestion(Questionnaire questionnaire);
+
+    Questionnaire fromQnrmToQuestionnaire(QuestionnaireRecModel questionnaireRecModel);
+
+    List<Question> fromQrmToQuestions( List<HashMap<String,Object>> questionRecModelList);
 }

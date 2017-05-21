@@ -6,12 +6,14 @@
     <result column="question_name" jdbcType="VARCHAR" property="questionName" />
     <result column="question_type" jdbcType="VARCHAR" property="questionType" />
     <result column="questionnaire_id" jdbcType="VARCHAR" property="questionnaireId" />
+    <result column="is_edit" jdbcType="INTEGER" property="isEdit" />
+    <result column="is_necessary" jdbcType="INTEGER" property="isNecessary" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.klw.oa.entity.Question">
     <result column="question_selection" jdbcType="LONGVARCHAR" property="questionSelection" />
   </resultMap>
   <sql id="Base_Column_List">
-    question_id, question_name, question_type,questionnaire_id
+    question_id, question_name, question_type,questionnaire_id,is_edit,is_necessary
   </sql>
   <sql id="Blob_Column_List">
     question_selection
@@ -52,6 +54,12 @@
       <if test="questionnaireId != null">
         questionnaire_id,
       </if>
+      <if test="isEdit != null">
+        is_edit,
+      </if>
+      <if test="isNecessary != null">
+        is_necessary
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="questionId != null">
@@ -68,6 +76,12 @@
       </if>
       <if test="questionnaireId != null">
         #{questionnaireId,jdbcType=INTEGER},
+      </if>
+      <if test="isEdit != null">
+        #{isEdit,jdbcType=INTEGER},
+      </if>
+      <if test="isNecessary != null">
+        #{isNecessary,jdbcType=INTEGER}
       </if>
     </trim>
   </insert>

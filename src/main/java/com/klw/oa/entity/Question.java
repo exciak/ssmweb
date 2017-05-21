@@ -14,6 +14,27 @@ public class Question {
 
     private String questionSelection;
 
+    private Integer isEdit;
+
+    private Integer isNecessary;
+
+    public Integer getIsEdit() {
+        return isEdit;
+    }
+
+    public Integer getIsNecessary() {
+        return isNecessary;
+    }
+
+    public void setIsEdit(Integer isEdit) {
+        this.isEdit = isEdit;
+    }
+
+    public void setIsNecessary(Integer isNecessary) {
+        this.isNecessary = isNecessary;
+    }
+
+
     public Question() {
     }
 

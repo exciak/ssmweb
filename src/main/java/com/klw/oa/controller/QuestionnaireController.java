@@ -2,6 +2,8 @@ package com.klw.oa.controller;
 
 import com.klw.oa.entity.Question;
 import com.klw.oa.entity.Questionnaire;
+import com.klw.oa.entity.model.QuestionRecModel;
+import com.klw.oa.entity.model.QuestionnaireRecModel;
 import com.klw.oa.service.QuestionService;
 import com.klw.oa.service.QuestionnaireService;
 import net.sf.json.JSONArray;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -52,21 +55,29 @@ public class QuestionnaireController {
     @ResponseBody
     public String create(@RequestParam(value = "questionnaireEntity", required = false) String entity,
                          @RequestParam(value = "questionList", required = false) String list){
-        Questionnaire questionnaire = new Questionnaire();
-        List<Question> questions = new ArrayList<Question>();
+        QuestionnaireRecModel qnrm = null;
+
+        List<HashMap<String,Object>> qrms = null;
+
+        Questionnaire questionnaire = null;
+        List<Question> questions = null;
 
         try {
-            questionnaire = (Questionnaire) JSONObject.toBean(JSONObject.fromObject(entity),Questionnaire.class);
+            qnrm = (QuestionnaireRecModel) JSONObject.toBean(JSONObject.fromObject(entity),QuestionnaireRecModel.class);
 
             if(null != list) {
                 JSONArray json = JSONArray.fromObject(list);
-                questions = (List<Question>)json.toCollection(json,Question.class);
+
+               /* qrms = (List<QuestionRecModel>)json.toCollection(json,QuestionRecModel.class);*/
+                qrms = ( List<HashMap<String,Object>>)json.toCollection(json,HashMap.class);
             }
         } catch (Exception e) {
             e.printStackTrace();
             return "fail";
         }
+        questionnaire = questionnaireService.fromQnrmToQuestionnaire(qnrm);
 
+        questions = questionnaireService.fromQrmToQuestions(qrms);
 
         questionnaire.setQuestions(questions);
 
