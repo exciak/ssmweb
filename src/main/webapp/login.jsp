@@ -101,7 +101,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				  {"questionName":"qestName2","questionType":"qType","questionSelection":"qSel2"},
 				  {"questionName":"qestName3","questionType":"qType","questionSelection":"qSel3"},
 			  ];*/
-              var questionnaireEntity = {
+              var questionnaireEntitya = {
                   "questionnaireTitle":"qname",
                   "questionnaireType":"type",
                   "questionnairePrompt":"prompt",
@@ -153,10 +153,41 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   $.ajax({
                       type: "post",
                       url: rootPath+"/questionnaire/create",
-                      data: {"questionnaireEntity":JSON.stringify(questionnaireEntity), "questionList":JSON.stringify(questionList)},
+                      data: {"questionnaireEntity":JSON.stringify(questionnaireEntitya), "questionList":JSON.stringify(questionList)},
                       dataType: "json",
                       //contentType: 'application/json;charset=utf-8',
                       success: function (data) {
+                          if (data.result == "success") {
+                              //location.href = rootPath+"/appsystems";
+                          } else {
+                              //dmallError(data.result);
+                          }
+                      },
+                      error: function () {
+                          //dmallAjaxError();
+                          $("#btn_commitCreateInfo").attr('disabled', false);
+                      }
+                  })
+              });
+
+              var pageEntity={
+                  "page":1,
+				  "rows":3,
+			  };
+              var questionnaireEntity = {
+                  "questionnaireName":"q"
+			  };
+
+              //分页测试
+              $("#testPage").click(function () {
+                  $.ajax({
+                      type: "post",
+                      url: rootPath+"/questionnaire/getAll",
+                      data: {"questionnaireEntity":JSON.stringify(questionnaireEntity), "pageEntity":JSON.stringify(pageEntity)},
+                      dataType: "json",
+                      //contentType: 'application/json;charset=utf-8',
+                      success: function (data) {
+                          console.log(data);
                           if (data.result == "success") {
                               //location.href = rootPath+"/appsystems";
                           } else {
@@ -244,6 +275,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  <button value="as" id="saveQuestionnarie">添加问卷</button>
 
 	  <button value="teeesss" id="updateQuestionnaire">修改问卷</button>
+	  <button value="teeesss" id="testPage">Tpage</button>
 	  <button value="teeesss" id=""></button>
 
 

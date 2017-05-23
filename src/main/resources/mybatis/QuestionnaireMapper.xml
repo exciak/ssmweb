@@ -9,6 +9,7 @@
     <result column="questionnaire_type" jdbcType="VARCHAR" property="questionnaireType" />
     <result column="questionnaire_catalog" jdbcType="VARCHAR" property="questionnaireCatalog" />
     <result column="create_id" jdbcType="INTEGER" property="createId" />
+    <result column="questionnaire_prompt" jdbcType="VARCHAR" property="questionnairePrompt" />
   </resultMap>
   <resultMap id="QuestionsResultMap" type="com.klw.oa.entity.Questionnaire">
     <id column="questionnaire_id" jdbcType="INTEGER" property="questionnaireId" />
@@ -27,7 +28,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     questionnaire_id, questionnaire_name, create_time, update_time, questionnaire_type, 
-    questionnaire_catalog, create_id
+    questionnaire_catalog, create_id,questionnaire_prompt
   </sql>
   <!--通过Id获取复杂的问卷对象-->
   <select id="selectComplexById" parameterType="java.lang.Integer" resultMap="QuestionsResultMap">
@@ -57,6 +58,18 @@
       </if>
     </where>
     order by questionnaire_id limit #{pageIndex},#{pageNum}
+  </select>
+  <!--根据条件统计数量-->
+  <select id="selectCountByName" parameterType="map" resultType="java.lang.Integer">
+    select
+    count(*)
+    from questionnaire
+    <where>
+      <if test="questionnaireCriteria != null and questionnaireCriteria.questionnaireName!=null and questionnaireCriteria.questionnaireName !=''">
+        questionnaire_name like "%" #{questionnaireCriteria.questionnaireName} "%"
+      </if>
+    </where>
+    order by questionnaire_id
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -100,6 +113,9 @@
       <if test="createId != null">
         create_id,
       </if>
+      <if test="questionnairePrompt != null">
+        questionnaire_prompt
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="questionnaireId != null">
@@ -122,6 +138,9 @@
       </if>
       <if test="createId != null">
         #{createId,jdbcType=INTEGER},
+      </if>
+      <if test="questionnairePrompt != null">
+        #{questionnairePrompt,jdbcType=VARCHAR}
       </if>
     </trim>
   </insert>

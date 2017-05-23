@@ -26,4 +26,6 @@ public interface QuestionnaireService {
     Questionnaire fromQnrmToQuestionnaire(QuestionnaireRecModel questionnaireRecModel);
 
     List<Question> fromQrmToQuestions( List<HashMap<String,Object>> questionRecModelList);
+
+    Integer selectCountByName(Questionnaire questionnaire);
 }

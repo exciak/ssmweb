@@ -157,4 +157,12 @@ public class QuestionnaireServiceImpl implements QuestionnaireService{
         }
         return questions;
     }
+
+    @Override
+    public Integer selectCountByName(Questionnaire questionnaire) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("questionnaireCriteria", questionnaire);
+
+        return questionnaireMapper.selectCountByName(map);
+    }
 }

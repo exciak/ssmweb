@@ -1,14 +1,17 @@
 package com.klw.oa.controller;
 
+import com.klw.oa.entity.Page;
 import com.klw.oa.entity.Question;
 import com.klw.oa.entity.Questionnaire;
 import com.klw.oa.entity.model.QuestionRecModel;
 import com.klw.oa.entity.model.QuestionnaireRecModel;
 import com.klw.oa.service.QuestionService;
 import com.klw.oa.service.QuestionnaireService;
+import freemarker.ext.beans.HashAdapter;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.aspectj.weaver.patterns.TypePatternQuestions;
+import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +23,7 @@ import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by admins on 2017/4/22.
@@ -36,10 +40,52 @@ public class QuestionnaireController {
 
     @ResponseBody
     @RequestMapping("/getAll")
-    public List<Questionnaire> getQuestionnaires(Questionnaire questionnaire){
-        List<Questionnaire> questionnaires = questionnaireService.getAllByPage(questionnaire,0,3);
+    public Map<String,Object> getQuestionnaires(@RequestParam(value = "questionnaireEntity", required = false)String questionnaireEntity,
+                                                @RequestParam(value = "pageEntity", required = false) String pageEntity
+                                                 ){
+        Map<String,Object> map = new HashMap<String,Object>();
 
-        return questionnaires;
+        Questionnaire questionnaire = null;
+
+        Page p = null;
+        try{
+            questionnaire = (Questionnaire) JSONObject.toBean(JSONObject.fromObject(questionnaireEntity),Questionnaire.class);
+
+            p = (Page)JSONObject.toBean(JSONObject.fromObject(pageEntity),Page.class);
+        }catch(Exception e){
+            e.printStackTrace();
+            map.put("result","fail");
+            return map;
+        }
+        Integer pageIndex = null;
+        Integer pageNum = null;
+
+        if(null != p && p.getPage() != null && p.getPage() > 0 && p.getRows() != null){
+            pageIndex = (p.getPage() - 1)*p.getRows();
+            pageNum = p.getRows();
+        }else{
+            pageIndex = 0;
+            pageNum = 3;
+        }
+
+        //根据名称获取所有的问卷，同时有分页
+        List<Questionnaire> questionnaires = questionnaireService.getAllByPage(questionnaire,pageIndex,pageNum);
+
+        Integer total = questionnaireService.selectCountByName(questionnaire);
+
+        map.put("result","success");
+
+        map.put("page",p.getPage());
+        map.put("rows",p.getRows());
+
+        map.put("total",total);
+
+        //总共的页数
+        map.put("totalPage",((total+p.getRows())-1)/p.getRows());
+
+        map.put("questionnaires",questionnaires);
+
+        return map;
     }
 
     @ResponseBody

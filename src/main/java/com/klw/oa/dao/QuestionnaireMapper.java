@@ -23,4 +23,6 @@ public interface QuestionnaireMapper {
     List<Questionnaire> selectComplexByPage(Map<String,Object> map);
 
     Questionnaire selectComplexById(Integer questionnaireId);
+
+    Integer selectCountByName(Map<String,Object> map);
 }
