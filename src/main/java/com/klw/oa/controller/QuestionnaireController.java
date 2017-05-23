@@ -73,15 +73,12 @@ public class QuestionnaireController {
 
         Integer total = questionnaireService.selectCountByName(questionnaire);
 
+        p.setTotal(total);
+        p.setTotalPage(((total+p.getRows())-1)/p.getRows());
+
         map.put("result","success");
 
-        map.put("page",p.getPage());
-        map.put("rows",p.getRows());
-
-        map.put("total",total);
-
-        //总共的页数
-        map.put("totalPage",((total+p.getRows())-1)/p.getRows());
+        map.put("page",p);
 
         map.put("questionnaires",questionnaires);
 
