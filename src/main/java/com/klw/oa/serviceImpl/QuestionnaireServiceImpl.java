@@ -66,8 +66,6 @@ public class QuestionnaireServiceImpl implements QuestionnaireService{
 
         questionnaires = questionnaireMapper.selectComplexByPage(map);
 
-
-
         return questionnaires;
     }
 
@@ -119,6 +117,8 @@ public class QuestionnaireServiceImpl implements QuestionnaireService{
                 questionnaire.setUpdateTime(new Date());
             }
             questionnaire.setQuestionnaireName(questionnaireRecModel.getQuestionnaireTitle());
+            //设置状态为未发布
+            questionnaire.setQuesState(0);
             questionnaire.setQuestionnairePrompt(questionnaireRecModel.getQuestionnairePrompt());
         }
 

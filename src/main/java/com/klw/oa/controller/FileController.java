@@ -96,13 +96,14 @@ public class FileController {
 
     @ResponseBody
     @RequestMapping("/uploadFile")
-    public Map<Object,Object> uplaodFile(HttpServletRequest request, HttpServletResponse response)
+    public Map<String,String> uplaodFile(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DiskFileItemFactory factory = new DiskFileItemFactory();
 
         ServletFileUpload upload = new ServletFileUpload(factory);
 
         Map<String,String> map = new HashMap<String,String>();
+        Map<String,String> res = new HashMap<String,String>();
 
         User user =(User) request.getSession().getAttribute("user");
 
@@ -166,9 +167,14 @@ public class FileController {
             } catch (FileUploadException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
+
+                res.put("result","fail");
+                return res;
             }
 
         }
-        return null;
+        res.put("result","success");
+        res.put("fileName",realName);
+        return res;
     }
 }

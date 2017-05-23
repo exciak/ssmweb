@@ -85,6 +85,7 @@ public class QuestionnaireController {
         return map;
     }
 
+
     @ResponseBody
     @RequestMapping("/getById")
     public Questionnaire getComplexQuestionnaire(@RequestParam(value = "questionnaireId", required = false) Integer questionnaireId){
@@ -93,6 +94,13 @@ public class QuestionnaireController {
         return questionnaire;
     }
 
+    @ResponseBody
+    @RequestMapping("/publish")
+    public Questionnaire publishQuestionnaire(@RequestParam(value = "questionnaireId", required = false) Integer questionnaireId){
+        Questionnaire questionnaire ;
+
+        return null;
+    }
 
     @RequestMapping(value = "/create", method= RequestMethod.POST)
     @ResponseBody

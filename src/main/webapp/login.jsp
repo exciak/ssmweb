@@ -109,7 +109,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               };
 
               var questionList = [
-				  {"questionGenre": 0,
+				  {"questionGenre": 1,
                       "questionTitle": "单选题",
                       "isNecessary": true,
                       "isEdit": false,
@@ -175,7 +175,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				  "rows":3,
 			  };
               var questionnaireEntity = {
-                  "questionnaireName":"q"
+                 "createId":1
 			  };
 
               //分页测试

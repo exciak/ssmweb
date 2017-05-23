@@ -11,7 +11,7 @@ public class QuestionnaireRecModel {
 
     private String questionnairePrompt;
 
-    private String questionnaireType;
+    private Integer questionnaireType;
 
     private String questionnaireCatalog;
 
@@ -28,6 +28,14 @@ public class QuestionnaireRecModel {
         this.questionnaireId = questionnaireId;
     }
 
+    public Integer getQuestionnaireType() {
+        return questionnaireType;
+    }
+
+    public void setQuestionnaireType(Integer questionnaireType) {
+        this.questionnaireType = questionnaireType;
+    }
+
     public String getQuestionnaireTitle() {
         return questionnaireTitle;
     }
@@ -36,9 +44,6 @@ public class QuestionnaireRecModel {
         return questionnairePrompt;
     }
 
-    public String getQuestionnaireType() {
-        return questionnaireType;
-    }
 
     public String getQuestionnaireCatalog() {
         return questionnaireCatalog;
@@ -60,9 +65,6 @@ public class QuestionnaireRecModel {
         this.questionnairePrompt = questionnairePrompt;
     }
 
-    public void setQuestionnaireType(String questionnaireType) {
-        this.questionnaireType = questionnaireType;
-    }
 
     public void setQuestionnaireCatalog(String questionnaireCatalog) {
         this.questionnaireCatalog = questionnaireCatalog;

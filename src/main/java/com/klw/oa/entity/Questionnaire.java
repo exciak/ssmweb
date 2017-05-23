@@ -21,7 +21,7 @@ public class Questionnaire {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date updateTime;
 
-    private String questionnaireType;
+    private Integer questionnaireType;
 
     private String questionnaireCatalog;
 
@@ -31,8 +31,15 @@ public class Questionnaire {
 
     private String questionnairePrompt;
 
+    private Integer quesState;
 
+    public Integer getQuesState() {
+        return quesState;
+    }
 
+    public void setQuesState(Integer quesState) {
+        this.quesState = quesState;
+    }
 
     public String getQuestionnairePrompt() {
         return questionnairePrompt;
@@ -88,12 +95,12 @@ public class Questionnaire {
         this.updateTime = updateTime;
     }
 
-    public String getQuestionnaireType() {
+    public Integer getQuestionnaireType() {
         return questionnaireType;
     }
 
-    public void setQuestionnaireType(String questionnaireType) {
-        this.questionnaireType = questionnaireType == null ? null : questionnaireType.trim();
+    public void setQuestionnaireType(Integer questionnaireType) {
+        this.questionnaireType = questionnaireType;
     }
 
     public String getQuestionnaireCatalog() {

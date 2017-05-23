@@ -9,6 +9,7 @@
     <result column="questionnaire_type" jdbcType="VARCHAR" property="questionnaireType" />
     <result column="questionnaire_catalog" jdbcType="VARCHAR" property="questionnaireCatalog" />
     <result column="create_id" jdbcType="INTEGER" property="createId" />
+    <result column="q_state" jdbcType="INTEGER" property="quesState" />
     <result column="questionnaire_prompt" jdbcType="VARCHAR" property="questionnairePrompt" />
   </resultMap>
   <resultMap id="QuestionsResultMap" type="com.klw.oa.entity.Questionnaire">
@@ -16,8 +17,10 @@
     <result column="questionnaire_name" jdbcType="VARCHAR" property="questionnaireName" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-    <result column="questionnaire_type" jdbcType="VARCHAR" property="questionnaireType" />
+    <result column="questionnaire_type" jdbcType="INTEGER" property="questionnaireType" />
     <result column="questionnaire_catalog" jdbcType="VARCHAR" property="questionnaireCatalog" />
+    <result column="questionnaire_prompt" jdbcType="VARCHAR" property="questionnairePrompt" />
+    <result column="q_state" jdbcType="INTEGER" property="quesState" />
     <result column="create_id" jdbcType="INTEGER" property="createId" />
     <collection property="questions" ofType="com.klw.oa.entity.Question">
       <id column="question_id" jdbcType="INTEGER" property="questionId" />
@@ -30,7 +33,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     questionnaire_id, questionnaire_name, create_time, update_time, questionnaire_type, 
-    questionnaire_catalog, create_id,questionnaire_prompt
+    questionnaire_catalog, create_id,questionnaire_prompt,q_state
   </sql>
   <!--通过Id获取复杂的问卷对象-->
   <select id="selectComplexById" parameterType="java.lang.Integer" resultMap="QuestionsResultMap">
@@ -57,6 +60,15 @@
     <where>
       <if test="questionnaireCriteria != null and questionnaireCriteria.questionnaireName!=null and questionnaireCriteria.questionnaireName !=''">
         questionnaire_name like "%" #{questionnaireCriteria.questionnaireName} "%"
+      </if>
+      <if test="questionnaireCriteria != null and questionnaireCriteria.questionnaireType!=null and questionnaireCriteria.questionnaireType != 0">
+      and   questionnaire_type =  #{questionnaireCriteria.questionnaireType}
+      </if>
+      <if test="questionnaireCriteria != null and questionnaireCriteria.quesState!=null ">
+        and   q_state =  #{questionnaireCriteria.quesState}
+      </if>
+      <if test="questionnaireCriteria != null and questionnaireCriteria.createId != null and questionnaireCriteria.createId != 0">
+        and   create_id =  #{questionnaireCriteria.createId}
       </if>
     </where>
     order by questionnaire_id limit #{pageIndex},#{pageNum}
@@ -118,6 +130,9 @@
       <if test="questionnairePrompt != null">
         questionnaire_prompt
       </if>
+      <if test="quesState != null">
+        q_state
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="questionnaireId != null">
@@ -133,7 +148,7 @@
         #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="questionnaireType != null">
-        #{questionnaireType,jdbcType=VARCHAR},
+        #{questionnaireType,jdbcType=INTEGER},
       </if>
       <if test="questionnaireCatalog != null">
         #{questionnaireCatalog,jdbcType=VARCHAR},
@@ -143,6 +158,9 @@
       </if>
       <if test="questionnairePrompt != null">
         #{questionnairePrompt,jdbcType=VARCHAR}
+      </if>
+      <if test="quesState != null">
+        #{quesState,jdbcType=INTEGER}
       </if>
     </trim>
   </insert>
