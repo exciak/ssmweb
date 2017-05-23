@@ -24,6 +24,8 @@
       <result column="question_name" jdbcType="VARCHAR" property="questionName" />
       <result column="question_type" jdbcType="VARCHAR" property="questionType" />
       <result column="question_selection" jdbcType="LONGVARCHAR" property="questionSelection" />
+      <result column="is_edit" jdbcType="INTEGER" property="isEdit" />
+      <result column="is_necessary" jdbcType="INTEGER" property="isNecessary" />
     </collection>
   </resultMap>
   <sql id="Base_Column_List">
@@ -32,7 +34,7 @@
   </sql>
   <!--通过Id获取复杂的问卷对象-->
   <select id="selectComplexById" parameterType="java.lang.Integer" resultMap="QuestionsResultMap">
-    select qn.*,q.question_id,q.question_name,q.question_selection,q.question_type from
+    select qn.*,q.question_id,q.question_name,q.question_selection,q.question_type,q.is_edit,q.is_necessary from
      questionnaire qn LEFT JOIN question q on qn.questionnaire_id = q.questionnaire_id
       where qn.questionnaire_id = #{questionnaireId,jdbcType=INTEGER}
   </select>
