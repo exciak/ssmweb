@@ -130,7 +130,9 @@ public class FileController {
                         String name = fileItem.getName();
                         name= FileUtils.getFileName(name.substring(name.lastIndexOf(".")));
                         realName = name;
-                        String path = request.getServletContext().getRealPath("/upload/"+name);
+                        /*String path = request.getServletContext().getRealPath("/upload/"+name);*/
+                        String path = "C:\\Users\\admins\\Desktop\\angular2\\sourse\\surveyStar\\src\\assets\\img\\upload\\"+realName;
+
                         System.out.println(path);
                         File file = new File(path);
                         if(!file.getParentFile().exists()) {
