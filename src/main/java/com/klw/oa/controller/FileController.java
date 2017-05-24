@@ -159,21 +159,22 @@ public class FileController {
                 myfile.setRealName(realName);
                 int result = mfs.insertFileSer(myfile);
                 if(result > 0){
-                    response.sendRedirect(request.getContextPath()+"/file/dofile?method=filelist");
+                    res.put("result","success");
+                   // response.sendRedirect(request.getContextPath()+"/file/dofile?method=filelist");
                 }else{
-                    response.getWriter().print("<script>alert('添加失败');history.go(-1);</script>");
+                    res.put("result","fail");
+                   // response.getWriter().print("<script>alert('添加失败');history.go(-1);</script>");
                 }
 
             } catch (FileUploadException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
 
-                res.put("result","fail");
                 return res;
             }
 
         }
-        res.put("result","success");
+
         res.put("fileName",realName);
         return res;
     }

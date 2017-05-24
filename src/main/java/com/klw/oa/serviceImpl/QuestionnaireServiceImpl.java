@@ -165,4 +165,20 @@ public class QuestionnaireServiceImpl implements QuestionnaireService{
 
         return questionnaireMapper.selectCountByName(map);
     }
+
+    @Override
+    public Questionnaire getSimpleById(Integer questionnaireId) {
+        return questionnaireMapper.selectByPrimaryKey(questionnaireId);
+    }
+
+    @Override
+    public Integer editPulishState(Questionnaire questionnaire) {
+        if(null != questionnaire){
+            //将发布状态改为1
+            questionnaire.setQuesState(1);
+        }
+        Integer result = questionnaireMapper.updateByPrimaryKeySelective(questionnaire);
+
+        return result;
+    }
 }

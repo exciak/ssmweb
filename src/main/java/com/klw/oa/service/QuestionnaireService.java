@@ -17,6 +17,8 @@ public interface QuestionnaireService {
 
     List<Questionnaire> getAllComplexByPage(Questionnaire questionnaire, int pageIndex, int pageNum);
 
+    Questionnaire getSimpleById(Integer questionnaireId);
+
     Questionnaire getComplexById(Integer questionnaireId);
 
     Integer addQuestionnaire(Questionnaire questionnaire);
@@ -28,4 +30,6 @@ public interface QuestionnaireService {
     List<Question> fromQrmToQuestions( List<HashMap<String,Object>> questionRecModelList);
 
     Integer selectCountByName(Questionnaire questionnaire);
+
+    Integer editPulishState(Questionnaire questionnaire);
 }

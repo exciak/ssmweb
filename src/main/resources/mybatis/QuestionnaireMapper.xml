@@ -82,6 +82,15 @@
       <if test="questionnaireCriteria != null and questionnaireCriteria.questionnaireName!=null and questionnaireCriteria.questionnaireName !=''">
         questionnaire_name like "%" #{questionnaireCriteria.questionnaireName} "%"
       </if>
+      <if test="questionnaireCriteria != null and questionnaireCriteria.questionnaireType!=null and questionnaireCriteria.questionnaireType != 0">
+        and   questionnaire_type =  #{questionnaireCriteria.questionnaireType}
+      </if>
+      <if test="questionnaireCriteria != null and questionnaireCriteria.quesState!=null ">
+        and   q_state =  #{questionnaireCriteria.quesState}
+      </if>
+      <if test="questionnaireCriteria != null and questionnaireCriteria.createId != null and questionnaireCriteria.createId != 0">
+        and   create_id =  #{questionnaireCriteria.createId}
+      </if>
     </where>
     order by questionnaire_id
   </select>
@@ -177,13 +186,19 @@
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
       <if test="questionnaireType != null">
-        questionnaire_type = #{questionnaireType,jdbcType=VARCHAR},
+        questionnaire_type = #{questionnaireType,jdbcType=INTEGER},
       </if>
       <if test="questionnaireCatalog != null">
         questionnaire_catalog = #{questionnaireCatalog,jdbcType=VARCHAR},
       </if>
       <if test="createId != null">
         create_id = #{createId,jdbcType=INTEGER},
+      </if>
+      <if test="questionnairePrompt != null">
+        questionnaire_prompt = #{questionnairePrompt,jdbcType=VARCHAR}
+      </if>
+      <if test="quesState != null">
+        q_state = #{quesState,jdbcType=INTEGER}
       </if>
     </set>
     where questionnaire_id = #{questionnaireId,jdbcType=INTEGER}

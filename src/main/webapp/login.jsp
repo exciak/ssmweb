@@ -175,7 +175,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				  "rows":3,
 			  };
               var questionnaireEntity = {
-                 "createId":1
+                 "quesState":1
 			  };
 
               //分页测试

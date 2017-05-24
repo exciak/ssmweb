@@ -96,10 +96,23 @@ public class QuestionnaireController {
 
     @ResponseBody
     @RequestMapping("/publish")
-    public Questionnaire publishQuestionnaire(@RequestParam(value = "questionnaireId", required = false) Integer questionnaireId){
+    public Map<String,String> publishQuestionnaire(@RequestParam(value = "questionnaireId", required = false) Integer questionnaireId){
         Questionnaire questionnaire ;
 
-        return null;
+        Map<String,String> map = new HashMap<String, String>();
+
+        //通过Id获取对象
+        questionnaire = questionnaireService.getSimpleById(questionnaireId);
+
+        Integer result = questionnaireService.editPulishState(questionnaire);
+
+        if(result > 0){
+            map.put("result","success");
+        }else{
+            map.put("result","fail");
+        }
+
+        return map;
     }
 
     @RequestMapping(value = "/create", method= RequestMethod.POST)
