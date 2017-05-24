@@ -115,6 +115,21 @@ public class QuestionnaireController {
         return map;
     }
 
+    @ResponseBody
+    @RequestMapping("/delete")
+    public Map<String,String> deleteQuestionnaire(@RequestParam(value = "questionnaireId", required = false) Integer questionnaireId){
+        Map map = new HashMap<String,String>();
+
+        Integer res = questionnaireService.delQuestionnaireById(questionnaireId);
+        if(res > 0){
+            map.put("result","success");
+        }else{
+            map.put("result","fail");
+        }
+
+        return map;
+    }
+
     @RequestMapping(value = "/create", method= RequestMethod.POST)
     @ResponseBody
     public String create(@RequestParam(value = "questionnaireEntity", required = false) String entity,

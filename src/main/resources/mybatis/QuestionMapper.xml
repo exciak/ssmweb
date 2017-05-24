@@ -30,6 +30,11 @@
     delete from question
     where question_id = #{questionId,jdbcType=INTEGER}
   </delete>
+  <!--通过问卷Id删除问题-->
+  <delete id="deleteByQuestionnaireId" parameterType="java.lang.Integer">
+    delete from question
+    where questionnaire_id = #{questionnaireId,jdbcType=INTEGER}
+  </delete>
   <insert id="insert" parameterType="com.klw.oa.entity.Question">
     insert into question (question_id, question_name, question_type, 
       question_selection)

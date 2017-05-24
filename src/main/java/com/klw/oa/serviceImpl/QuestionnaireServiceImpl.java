@@ -181,4 +181,17 @@ public class QuestionnaireServiceImpl implements QuestionnaireService{
 
         return result;
     }
+
+    @Override
+    public Integer delQuestionnaireById(Integer questionnaireId) {
+        //先删除问题
+        Integer result = null;
+
+        result= questionMapper.deleteByQuestionnaireId(questionnaireId);
+
+        //在删除问卷
+        result = questionnaireMapper.deleteByPrimaryKey(questionnaireId);
+
+        return result;
+    }
 }

@@ -32,4 +32,6 @@ public interface QuestionnaireService {
     Integer selectCountByName(Questionnaire questionnaire);
 
     Integer editPulishState(Questionnaire questionnaire);
+
+    Integer delQuestionnaireById(Integer questionnaireId);
 }

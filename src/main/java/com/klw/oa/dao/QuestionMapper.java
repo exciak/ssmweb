@@ -7,6 +7,8 @@ import java.util.List;
 public interface QuestionMapper {
     int deleteByPrimaryKey(Integer questionId);
 
+    int deleteByQuestionnaireId(Integer questionnaireId);
+
     int insert(Question record);
 
     int insertSelective(Question record);
