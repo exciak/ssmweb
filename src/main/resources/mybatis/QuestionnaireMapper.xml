@@ -137,7 +137,7 @@
         create_id,
       </if>
       <if test="questionnairePrompt != null">
-        questionnaire_prompt
+        questionnaire_prompt,
       </if>
       <if test="quesState != null">
         q_state
@@ -166,7 +166,7 @@
         #{createId,jdbcType=INTEGER},
       </if>
       <if test="questionnairePrompt != null">
-        #{questionnairePrompt,jdbcType=VARCHAR}
+        #{questionnairePrompt,jdbcType=VARCHAR},
       </if>
       <if test="quesState != null">
         #{quesState,jdbcType=INTEGER}
@@ -195,7 +195,7 @@
         create_id = #{createId,jdbcType=INTEGER},
       </if>
       <if test="questionnairePrompt != null">
-        questionnaire_prompt = #{questionnairePrompt,jdbcType=VARCHAR}
+        questionnaire_prompt = #{questionnairePrompt,jdbcType=VARCHAR},
       </if>
       <if test="quesState != null">
         q_state = #{quesState,jdbcType=INTEGER}

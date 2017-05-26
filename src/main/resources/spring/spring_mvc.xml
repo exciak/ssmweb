@@ -15,7 +15,8 @@
 	<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"></bean>
 	-->
 	<mvc:resources location="/image/" mapping="/image/**"/> 
-	<mvc:resources location="/css/" mapping="/css/**"/> 
+	<mvc:resources location="/upload/" mapping="/upload/**"/>
+	<mvc:resources location="/css/" mapping="/css/**"/>
 	<mvc:resources location="/js/" mapping="/js/**"/>
 	<bean id="viewResolver"
         class="org.springframework.web.servlet.view.UrlBasedViewResolver">

@@ -247,6 +247,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <div id="log">
 	  <h1>登陆页面</h1>
 
+	  <img src="${pageContext.request.contextPath }/image/201705051325023732.jpg" alt="aa">
+
 	  <form action="${pageContext.request.contextPath }/dologin/login" method="post">
 		  <table cellpadding="4" >
 			  ${pageContext.request.contextPath }

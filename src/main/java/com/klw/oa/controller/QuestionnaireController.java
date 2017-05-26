@@ -5,6 +5,7 @@ import com.klw.oa.entity.Question;
 import com.klw.oa.entity.Questionnaire;
 import com.klw.oa.entity.model.QuestionRecModel;
 import com.klw.oa.entity.model.QuestionnaireRecModel;
+import com.klw.oa.model.QuestionnaireShowModel;
 import com.klw.oa.service.QuestionService;
 import com.klw.oa.service.QuestionnaireService;
 import freemarker.ext.beans.HashAdapter;
@@ -47,6 +48,8 @@ public class QuestionnaireController {
 
         Questionnaire questionnaire = null;
 
+        List<QuestionnaireShowModel> questionnaireShowModelList = null;
+
         Page p = null;
         try{
             questionnaire = (Questionnaire) JSONObject.toBean(JSONObject.fromObject(questionnaireEntity),Questionnaire.class);
@@ -71,6 +74,8 @@ public class QuestionnaireController {
         //根据名称获取所有的问卷，同时有分页
         List<Questionnaire> questionnaires = questionnaireService.getAllByPage(questionnaire,pageIndex,pageNum);
 
+        questionnaireShowModelList = questionnaireService.fromListToShowModels(questionnaires);
+
         Integer total = questionnaireService.selectCountByName(questionnaire);
 
         p.setTotal(total);
@@ -80,7 +85,7 @@ public class QuestionnaireController {
 
         map.put("page",p);
 
-        map.put("questionnaires",questionnaires);
+        map.put("questionnaires",questionnaireShowModelList);
 
         return map;
     }
@@ -88,10 +93,12 @@ public class QuestionnaireController {
 
     @ResponseBody
     @RequestMapping("/getById")
-    public Questionnaire getComplexQuestionnaire(@RequestParam(value = "questionnaireId", required = false) Integer questionnaireId){
+    public QuestionnaireShowModel getComplexQuestionnaire(@RequestParam(value = "questionnaireId", required = false) Integer questionnaireId){
         Questionnaire questionnaire = questionnaireService.getComplexById(questionnaireId);
 
-        return questionnaire;
+        QuestionnaireShowModel questionnaireShowModel = questionnaireService.fromEntityToShowModel(questionnaire);
+
+        return questionnaireShowModel;
     }
 
     @ResponseBody

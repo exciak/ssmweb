@@ -3,17 +3,23 @@ package com.klw.oa.serviceImpl;
 
 import com.klw.oa.dao.QuestionMapper;
 import com.klw.oa.dao.QuestionnaireMapper;
+import com.klw.oa.dao.UserMapper;
 import com.klw.oa.entity.Question;
 import com.klw.oa.entity.Questionnaire;
+import com.klw.oa.entity.User;
 import com.klw.oa.entity.model.QuestionRecModel;
 import com.klw.oa.entity.model.QuestionnaireRecModel;
+import com.klw.oa.model.QuestionnaireShowModel;
 import com.klw.oa.service.QuestionService;
 import com.klw.oa.service.QuestionnaireService;
+import com.klw.oa.service.UserService;
+import com.klw.oa.utils.DmallBeanUtils;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.reflect.annotation.ExceptionProxy;
 
 import javax.annotation.Resource;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -32,6 +38,9 @@ public class QuestionnaireServiceImpl implements QuestionnaireService{
 
     @Autowired
     QuestionMapper questionMapper;
+
+    @Autowired
+    UserMapper userMapper;;
 
     @Override
     public List<Questionnaire> getAllByPage(Questionnaire questionnaire, int pageIndex, int pageNum) {
@@ -193,5 +202,46 @@ public class QuestionnaireServiceImpl implements QuestionnaireService{
         result = questionnaireMapper.deleteByPrimaryKey(questionnaireId);
 
         return result;
+    }
+
+    //将获取的问卷对象转化为model
+    @Override
+    public QuestionnaireShowModel fromEntityToShowModel(Questionnaire questionnaire) {
+        QuestionnaireShowModel questionnaireShowModel = null;
+
+        User user = null;
+        if(null != questionnaire){
+            questionnaireShowModel = new QuestionnaireShowModel();
+
+            try{
+                DmallBeanUtils.copyProperties(questionnaireShowModel,questionnaire);
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+                return null;
+            }
+            questionnaireShowModel.setCreateTime(questionnaire.getCreateTime());
+            questionnaireShowModel.setUpdateTime(questionnaire.getUpdateTime());
+            user = userMapper.selectByPrimaryKey(questionnaire.getCreateId());
+            questionnaireShowModel.setUser(user);
+
+        }
+
+        return questionnaireShowModel;
+    }
+
+    @Override
+    public List<QuestionnaireShowModel> fromListToShowModels(List<Questionnaire> questionnaireList) {
+        List<QuestionnaireShowModel> questionnaireShowModelList = new ArrayList<QuestionnaireShowModel>();
+        QuestionnaireShowModel questionnaireShowModel = null;
+        if(null != questionnaireList & questionnaireList.size() > 0){
+            for (Questionnaire questionnaire:questionnaireList
+                 ) {
+               questionnaireShowModel = fromEntityToShowModel(questionnaire);
+
+               questionnaireShowModelList .add(questionnaireShowModel);
+            }
+        }
+
+        return questionnaireShowModelList;
     }
 }
