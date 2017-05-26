@@ -103,13 +103,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			  ];*/
               var questionnaireEntitya = {
                   "questionnaireTitle":"qname",
-                  "questionnaireType":"type",
+                  "questionnaireType":"1",
                   "questionnairePrompt":"prompt",
                   "createId":1
               };
 
               var questionList = [
-				  {"questionGenre": 1,
+				  {"questionGenre": 2,
                       "questionTitle": "单选题",
                       "isNecessary": true,
                       "isEdit": false,
@@ -128,7 +128,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                       }
                   ]
               },
-			  {"questionGenre": 0,
+			  {"questionGenre": 1,
 				  "questionTitle": "单选题",
 				  "isNecessary": true,
 				  "isEdit": false,

@@ -128,6 +128,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService{
             questionnaire.setQuestionnaireName(questionnaireRecModel.getQuestionnaireTitle());
             //设置状态为未发布
             questionnaire.setQuesState(0);
+            questionnaire.setQuestionnaireType(questionnaireRecModel.getQuestionnaireType());
             questionnaire.setQuestionnairePrompt(questionnaireRecModel.getQuestionnairePrompt());
         }
 
