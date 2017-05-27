@@ -74,7 +74,8 @@ public class LoginController {
      * @return
      */
     @RequestMapping(value = "/register", method= RequestMethod.POST)
-    public String register(HttpServletRequest request, HttpServletResponse response,
+    @ResponseBody
+    public Map<String,Object> register(HttpServletRequest request, HttpServletResponse response,
                             @RequestParam(value = "userName") String userName,
                            @RequestParam(value = "address", required = false) String address,
                            @RequestParam(value = "tel", required = false) String tel,
@@ -98,6 +99,7 @@ public class LoginController {
             Integer ret = userServiceImpl.addUser(entity);
             if(ret == 1){
                 map.put("result", "success");
+                map.put("user",entity);
             }else if(ret == -1){
                 map.put("result", "当前用户名已经被使用");
             }else{
@@ -110,7 +112,7 @@ public class LoginController {
             map.put("result", "创建失败，请稍后重试");
         }
 
-      return  JsonUtil.getJsonStr(map);
+      return  map;
     }
 
 }
