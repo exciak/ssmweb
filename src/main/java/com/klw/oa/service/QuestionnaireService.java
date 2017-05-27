@@ -39,4 +39,6 @@ public interface QuestionnaireService {
     QuestionnaireShowModel fromEntityToShowModel(Questionnaire questionnaire);
 
     List<QuestionnaireShowModel> fromListToShowModels(List<Questionnaire> questionnaireList);
+
+    Integer getQuestionCount(Integer questionnaireId);
 }

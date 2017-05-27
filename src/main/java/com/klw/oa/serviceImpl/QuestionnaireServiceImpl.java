@@ -210,6 +210,8 @@ public class QuestionnaireServiceImpl implements QuestionnaireService{
     public QuestionnaireShowModel fromEntityToShowModel(Questionnaire questionnaire) {
         QuestionnaireShowModel questionnaireShowModel = null;
 
+        Integer count = null;
+
         User user = null;
         if(null != questionnaire){
             questionnaireShowModel = new QuestionnaireShowModel();
@@ -224,6 +226,9 @@ public class QuestionnaireServiceImpl implements QuestionnaireService{
             questionnaireShowModel.setUpdateTime(questionnaire.getUpdateTime());
             user = userMapper.selectByPrimaryKey(questionnaire.getCreateId());
             questionnaireShowModel.setUser(user);
+
+            count = getQuestionCount(questionnaire.getQuestionnaireId());
+            questionnaireShowModel.setQuestionCount(count);
 
         }
 
@@ -244,5 +249,10 @@ public class QuestionnaireServiceImpl implements QuestionnaireService{
         }
 
         return questionnaireShowModelList;
+    }
+
+    @Override
+    public Integer getQuestionCount(Integer questionnaireId) {
+        return questionMapper.countQuestions(questionnaireId);
     }
 }

@@ -26,6 +26,12 @@
     from question
     where question_id = #{questionId,jdbcType=INTEGER}
   </select>
+  <!--根据问卷id取得问卷的问题数量-->
+  <select id="countQuestions" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select count(*)
+    from question
+    where questionnaire_id = #{questionnaireId,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from question
     where question_id = #{questionId,jdbcType=INTEGER}

@@ -9,6 +9,16 @@ import com.klw.oa.entity.User;
 public class QuestionnaireShowModel extends Questionnaire{
     private User user;
 
+    private Integer questionCount;
+
+    public Integer getQuestionCount() {
+        return questionCount;
+    }
+
+    public void setQuestionCount(Integer questionCount) {
+        this.questionCount = questionCount;
+    }
+
     public User getUser() {
         return user;
     }

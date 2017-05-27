@@ -22,4 +22,6 @@ public interface QuestionMapper {
     int updateByPrimaryKey(Question record);
 
     int batchUpdateQuestions(List<Question> questions);
+
+    int countQuestions(Integer questionnaireId);
 }
