@@ -15,6 +15,12 @@
     from questionnaire_answer
     where questionnaire_answerid = #{questionnaireAnswerid,jdbcType=INTEGER}
   </select>
+  <select id="selectByQuestionnaireId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from questionnaire_answer
+    where questionnaire_id = #{questionnaireId,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from questionnaire_answer
     where questionnaire_answerid = #{questionnaireAnswerid,jdbcType=INTEGER}

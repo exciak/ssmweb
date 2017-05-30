@@ -6,17 +6,32 @@
     <result column="question_id" jdbcType="INTEGER" property="questionId" />
     <result column="description" jdbcType="VARCHAR" property="description" />
     <result column="questionnaire_id" jdbcType="INTEGER" property="questionnaireId" />
-    <result column="group_number" jdbcType="BIGINT" property="groupNumber" />
+    <result column="group_number" jdbcType="VARCHAR" property="groupNumber" />
+    <result column="answer" jdbcType="VARCHAR" property="answer" />
     <result column="question_type" jdbcType="VARCHAR" property="questionType" />
   </resultMap>
   <sql id="Base_Column_List">
-    question_answerid, question_id, description, questionnaire_id, group_number, question_type
+    question_answerid, question_id, description, questionnaire_id, group_number, answer,question_type
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from question_answer
     where question_answerid = #{questionAnswerid,jdbcType=INTEGER}
+  </select>
+  <!---->
+  <select id="selectQuestionsById" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select DISTINCT question_id from question_answer
+    where question_type in(0,1,2,7,8) and questionnaire_id = #{questionnaireId,jdbcType=INTEGER}
+     order by question_id
+  </select>
+  <!--查询对应问卷各个选项选择的人数-->
+  <select id="selectCountAnswer" parameterType="java.lang.Integer" resultType="java.util.HashMap">
+   select questionnaire_id,question_id,group_number,question_type,count(*) as num
+   from question_answer
+    where question_type in(0,1,2,7,8)
+    and questionnaire_id = #{questionnaireId,jdbcType=INTEGER}
+    group by question_id,group_number
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from question_answer
@@ -48,6 +63,9 @@
       <if test="groupNumber != null">
         group_number,
       </if>
+      <if test="answer != null">
+        answer,
+      </if>
       <if test="questionType != null">
         question_type,
       </if>
@@ -66,7 +84,10 @@
         #{questionnaireId,jdbcType=INTEGER},
       </if>
       <if test="groupNumber != null">
-        #{groupNumber,jdbcType=BIGINT},
+        #{groupNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null">
+        #{answer,jdbcType=VARCHAR},
       </if>
       <if test="questionType != null">
         #{questionType,jdbcType=VARCHAR},
@@ -86,7 +107,10 @@
         questionnaire_id = #{questionnaireId,jdbcType=INTEGER},
       </if>
       <if test="groupNumber != null">
-        group_number = #{groupNumber,jdbcType=BIGINT},
+        group_number = #{groupNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="answer != null">
+       answer = #{answer,jdbcType=VARCHAR},
       </if>
       <if test="questionType != null">
         question_type = #{questionType,jdbcType=VARCHAR},

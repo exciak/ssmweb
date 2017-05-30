@@ -11,6 +11,8 @@ public interface QuestionnaireAnswerMapper {
 
     QuestionnaireAnswer selectByPrimaryKey(Integer questionnaireAnswerid);
 
+    QuestionnaireAnswer selectByQuestionnaireId(Integer questionAnswerid);
+
     int updateByPrimaryKeySelective(QuestionnaireAnswer record);
 
     int updateByPrimaryKey(QuestionnaireAnswer record);

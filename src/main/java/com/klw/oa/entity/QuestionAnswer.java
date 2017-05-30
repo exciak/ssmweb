@@ -9,9 +9,19 @@ public class QuestionAnswer {
 
     private Integer questionnaireId;
 
-    private Long groupNumber;
+    private String groupNumber;
+
+    private String answer;
 
     private String questionType;
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
+    }
 
     public Integer getQuestionAnswerid() {
         return questionAnswerid;
@@ -45,11 +55,11 @@ public class QuestionAnswer {
         this.questionnaireId = questionnaireId;
     }
 
-    public Long getGroupNumber() {
+    public String getGroupNumber() {
         return groupNumber;
     }
 
-    public void setGroupNumber(Long groupNumber) {
+    public void setGroupNumber(String groupNumber) {
         this.groupNumber = groupNumber;
     }
 

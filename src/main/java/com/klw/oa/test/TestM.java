@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import com.klw.oa.dao.QuestionAnswerMapper;
 import com.klw.oa.entity.Question;
 import com.klw.oa.entity.Questionnaire;
+import com.klw.oa.service.AnswerService;
 import com.klw.oa.service.QuestionService;
 import com.klw.oa.service.QuestionnaireService;
 import org.junit.Test;
@@ -15,6 +17,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import com.klw.oa.entity.Profession;
 import com.klw.oa.service.DeptService;
 import com.klw.oa.serviceImpl.ProfessionServiceImpl;
+
+import javax.naming.event.ObjectChangeListener;
 
 public class TestM {
 
@@ -105,21 +109,7 @@ public class TestM {
         ApplicationContext context = new ClassPathXmlApplicationContext("classpath:spring/spring.xml");
 
 
-        /*DeptService ds = context.getBean("deptSer", DeptService.class);
-
-        List<Map<Object, Object>> list = ds.getAllMap();
-        for (Map<Object, Object> map : list) {
-            System.out.println(map);
-        }*/
-
-		/*ClassesService cls = context.getBean("clsService",ClassesService.class);
-		Classes clsses = new Classes();
-		clsses.setCreateDate(DateUtils.getDateByStr("2016-12-25", "yyyy-MM-dd"));
-		List<Classes> clses = cls.getAllClsByPage(clsses, 0, 8);
-		for (Classes classes : clses) {
-			System.out.println(classes);
-		}*/
-		List<Question> questionList = new ArrayList<Question>();
+		/*List<Question> questionList = new ArrayList<Question>();
 		Question question1 = new Question(1,2,"k","k","k");
 		Question question2 = new Question(3,2,"k","l","f");
 
@@ -128,9 +118,18 @@ public class TestM {
 
 		QuestionService questionService = context.getBean("QuestionServiceImpl",QuestionService.class);
 
-		int i = questionService.editQuestions(questionList);
+		int i = questionService.editQuestions(questionList);*/
 
-        System.out.println(i);
+        /*AnswerService answerService  = context.getBean("AnswerServiceImpl",AnswerService.class);
+
+       List<Map<String,Object>> map = answerService.getQuestionsCount(41);
+
+        System.out.println(map);*/
+        AnswerService answerService  = context.getBean("AnswerServiceImpl",AnswerService.class);
+
+        List<Integer> list = answerService.getQuestionIdsfromId(41);
+
+        System.out.println(list);
     }
 
 }

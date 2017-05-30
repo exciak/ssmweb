@@ -16,6 +16,14 @@
     from question_answercount
     where question__answercountid = #{questionAnswercountid,jdbcType=INTEGER}
   </select>
+  <!--通过问卷id和问题id筛选-->
+  <select id="selectByTwoId" parameterType="map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from question_answercount
+    where questionnaire_id = #{questionnaireId,jdbcType=INTEGER}
+     and question_id = #{questionId,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from question_answercount
     where question__answercountid = #{questionAnswercountid,jdbcType=INTEGER}

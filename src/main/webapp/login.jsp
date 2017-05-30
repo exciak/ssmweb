@@ -38,7 +38,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
           });*/
           var user1 = {
-			"userName":"admisn",
+			"userName":"admisns1",
 			  "password":"admin",
 			  "isAdmin":1,
 			  "address":"addr",
@@ -201,8 +201,373 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   })
               });
 
+              //问卷提交测试
+			  var answerData ={
+                  "questionnaireId":41,
+                  "questionnaireName":"问卷名",
+                  "createTime":"2017-05-30",
+                  "updateTime":"2017-05-30",
+                  "questionnaireType":2,
+                  "questionnaireCatalog":null,
+                  "createId":null,
+                  "questions":[
+                      {
+                          "questionId":147,
+                          "questionnaireId":null,
+                          "questionName":"单选题",
+                          "questionType":"0",
+                          "questionSelection":[
+                              {
+                                  "isSelected":false,
+                                  "text":"选项内容1"
+                              },
+                              {
+                                  "isSelected":true,
+                                  "text":"选项内容2"
+                              },
+                              {
+                                  "isSelected":false,
+                                  "text":"选项内容3"
+                              }
+                          ],
+                          "isEdit":0,
+                          "isNecessary":1,
+                          "selected":[
+                              1
+                          ]
+                      },
+                      {
+                          "questionId":148,
+                          "questionnaireId":null,
+                          "questionName":"下拉选择题",
+                          "questionType":"1",
+                          "questionSelection":[
+                              {
+                                  "isSelected":false,
+                                  "text":"选项内容1"
+                              },
+                              {
+                                  "isSelected":false,
+                                  "text":"选项内容2"
+                              },
+                              {
+                                  "isSelected":false,
+                                  "text":"选项内容3"
+                              }
+                          ],
+                          "isEdit":0,
+                          "isNecessary":1,
+                          "selected":"2"
+                      },
+                      {
+                          "questionId":149,
+                          "questionnaireId":null,
+                          "questionName":"多选题",
+                          "questionType":"2",
+                          "questionSelection":[
+                              {
+                                  "isSelected":false,
+                                  "text":"选项内容1"
+                              },
+                              {
+                                  "isSelected":true,
+                                  "text":"选项内容2"
+                              },
+                              {
+                                  "isSelected":true,
+                                  "text":"选项内容3"
+                              }
+                          ],
+                          "isEdit":0,
+                          "isNecessary":1,
+                          "selected":[
+                              1,
+                              2
+                          ]
+                      },
+                      {
+                          "questionId":150,
+                          "questionnaireId":null,
+                          "questionName":"单行填空题",
+                          "questionType":"3",
+                          "questionSelection":[
+                              {
+                                  "isSelected":false,
+                                  "text":"1111111"
+                              }
+                          ],
+                          "isEdit":0,
+                          "isNecessary":1,
+                          "selected":[
 
-          })
+                          ]
+                      },
+                      {
+                          "questionId":151,
+                          "questionnaireId":null,
+                          "questionName":"多行填空题",
+                          "questionType":"4",
+                          "questionSelection":[
+                              {
+                                  "isSelected":false,
+                                  "text":"122131 213 12 3 123 123"
+                              }
+                          ],
+                          "isEdit":0,
+                          "isNecessary":1,
+                          "selected":[
+
+                          ]
+                      },
+                      {
+                          "questionId":152,
+                          "questionnaireId":null,
+                          "questionName":"矩阵单选题",
+                          "questionType":"5",
+                          "questionSelection":[
+                              {
+                                  "choice":[
+                                      {
+                                          "isSelected":false,
+                                          "text":"选项内容1"
+                                      },
+                                      {
+                                          "isSelected":false,
+                                          "text":"选项内容2"
+                                      },
+                                      {
+                                          "isSelected":false,
+                                          "text":"选项内容3"
+                                      }
+                                  ],
+                                  "line":[
+                                      {
+                                          "isSelected":[
+
+                                          ],
+                                          "text":""
+                                      },
+                                      {
+                                          "isSelected":[
+                                              0
+                                          ],
+                                          "text":"矩阵行1"
+                                      },
+                                      {
+                                          "isSelected":[
+                                              1
+                                          ],
+                                          "text":"矩阵行2"
+                                      },
+                                      {
+                                          "isSelected":[
+                                              2
+                                          ],
+                                          "text":"矩阵行3"
+                                      },
+                                      {
+                                          "isSelected":[
+                                              1
+                                          ],
+                                          "text":"矩阵行4"
+                                      }
+                                  ]
+                              }
+                          ],
+                          "isEdit":0,
+                          "isNecessary":1,
+                          "selected":[
+                              10
+                          ]
+                      },
+                      {
+                          "questionId":153,
+                          "questionnaireId":null,
+                          "questionName":"矩阵多选题",
+                          "questionType":"6",
+                          "questionSelection":[
+                              {
+                                  "choice":[
+                                      {
+                                          "isSelected":false,
+                                          "text":"选项内容1"
+                                      },
+                                      {
+                                          "isSelected":false,
+                                          "text":"选项内容2"
+                                      },
+                                      {
+                                          "isSelected":false,
+                                          "text":"选项内容3"
+                                      }
+                                  ],
+                                  "line":[
+                                      {
+                                          "isSelected":[
+
+                                          ],
+                                          "text":""
+                                      },
+                                      {
+                                          "isSelected":[
+
+                                          ],
+                                          "text":"矩阵行1"
+                                      },
+                                      {
+                                          "isSelected":[
+
+                                          ],
+                                          "text":"矩阵行2"
+                                      },
+                                      {
+                                          "isSelected":[
+
+                                          ],
+                                          "text":"矩阵行3"
+                                      },
+                                      {
+                                          "isSelected":[
+
+                                          ],
+                                          "text":"矩阵行4"
+                                      }
+                                  ]
+                              }
+                          ],
+                          "isEdit":0,
+                          "isNecessary":1,
+                          "selected":[
+                              -3,
+                              -2,
+                              -1,
+                              0,
+                              1,
+                              2,
+                              3,
+                              4,
+                              5,
+                              6,
+                              7,
+                              8,
+                              9,
+                              10,
+                              11
+                          ]
+                      },
+                      {
+                          "questionId":154,
+                          "questionnaireId":null,
+                          "questionName":"图片单选",
+                          "questionType":"7",
+                          "questionSelection":[
+                              {
+                                  "imgUrl":"http://localhost:10080/oa/api/upload/201705301531581248.jpg",
+                                  "isSelected":false,
+                                  "text":"选项内容1"
+                              },
+                              {
+                                  "imgUrl":"http://localhost:10080/oa/api/upload/201705301532073437.jpg",
+                                  "isSelected":false,
+                                  "text":"选项内容2"
+                              },
+                              {
+                                  "imgUrl":"http://localhost:10080/oa/api/upload/201705301532136065.jpg",
+                                  "isSelected":false,
+                                  "text":"选项内容3"
+                              },
+                              {
+                                  "imgUrl":"http://localhost:10080/oa/api/upload/201705301532200621.jpg",
+                                  "isSelected":false,
+                                  "text":"选项内容4"
+                              }
+                          ],
+                          "isEdit":0,
+                          "isNecessary":1,
+                          "selected":[
+                              null
+                          ]
+                      },
+                      {
+                          "questionId":155,
+                          "questionnaireId":null,
+                          "questionName":"图片多选",
+                          "questionType":"8",
+                          "questionSelection":[
+                              {
+                                  "imgUrl":"http://localhost:10080/oa/api/upload/201705301532016835.jpg",
+                                  "isSelected":false,
+                                  "text":"选项内容1"
+                              },
+                              {
+                                  "imgUrl":"http://localhost:10080/oa/api/upload/201705301532100023.jpg",
+                                  "isSelected":false,
+                                  "text":"选项内容2"
+                              },
+                              {
+                                  "imgUrl":"http://localhost:10080/oa/api/upload/201705301532167025.jpg",
+                                  "isSelected":false,
+                                  "text":"选项内容3"
+                              },
+                              {
+                                  "imgUrl":"http://localhost:10080/oa/api/upload/201705301532225848.jpg",
+                                  "isSelected":false,
+                                  "text":"选项内容4"
+                              }
+                          ],
+                          "isEdit":0,
+                          "isNecessary":1,
+                          "selected":[
+
+                          ]
+                      },
+                      {
+                          "questionId":156,
+                          "questionnaireId":null,
+                          "questionName":"描述说明",
+                          "questionType":"9",
+                          "questionSelection":[
+                              {
+                                  "isSelected":false,
+                                  "text":"撒电视亲爱的"
+                              }
+                          ],
+                          "isEdit":0,
+                          "isNecessary":1,
+                          "selected":[
+
+                          ]
+                      }
+                  ],
+                  "questionnairePrompt":"欢迎参加调查！答卷数据仅用于统计分析，请放心填写。题目选项无对错之分，按照实际情况选择即可。感谢您的帮助！",
+                  "quesState":0,
+                  "user":null,
+                  "questionCount":10
+              }
+
+              $("#answer").click(function () {
+                  $.ajax({
+                      type: "post",
+                      url: rootPath+"/answer/anserData",
+                      data: {"answerData":JSON.stringify(answerData)},
+                      dataType: "json",
+                      //contentType: 'application/json;charset=utf-8',
+                      success: function (data) {
+                          console.log(data);
+                          if (data.result == "success") {
+                              //location.href = rootPath+"/appsystems";
+                          } else {
+                              //dmallError(data.result);
+                          }
+                      },
+                      error: function () {
+                          //dmallAjaxError();
+                          $("#btn_commitCreateInfo").attr('disabled', false);
+                      }
+                  })
+              });
+
+          });
 
           function check(){
               if($.trim($("#username").val())==""){
@@ -279,6 +644,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	  <button value="teeesss" id="updateQuestionnaire">修改问卷</button>
 	  <button value="teeesss" id="testPage">Tpage</button>
 	  <button value="teeesss" id=""></button>
+	  <button value="teeesss" id="answer">answer</button>
 
 
   </div>
