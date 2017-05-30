@@ -6,6 +6,7 @@ import com.klw.oa.dao.QuestionMapper;
 import com.klw.oa.dao.QuestionnaireAnswerMapper;
 import com.klw.oa.entity.*;
 import com.klw.oa.model.QuestionAnswerCountModel;
+import com.klw.oa.model.SelectModel;
 import com.klw.oa.service.AnswerService;
 import com.klw.oa.service.QuestionService;
 import net.sf.ezmorph.bean.MorphDynaBean;
@@ -185,7 +186,7 @@ public class AnswerServiceImpl implements AnswerService{
     public List<QuestionAnswerCountModel> getModels(List<Map<String, Object>> map, List<Integer> list) {
         List<QuestionAnswerCountModel> questionAnswerCountModels = new ArrayList<QuestionAnswerCountModel>();
 
-        Map<String,String> answers = null;
+        List<SelectModel> answers = null;
 
         QuestionAnswerCountModel questionAnswerCountModel = null;
 
@@ -194,17 +195,25 @@ public class AnswerServiceImpl implements AnswerService{
             for(int i = 0 ; i < list.size(); i++){
                 questionAnswerCountModel = new QuestionAnswerCountModel();
                 //用来存这个问题的选项
-                answers = new HashMap<String,String>();
+                answers = new ArrayList<SelectModel>();
+                SelectModel selectModel = null;
                 for (Map<String,Object> m:map
                      ) {
                     if(list.get(i).toString().equals(m.get("question_id").toString())){
-                        answers.put(m.get("group_number").toString(),m.get("num").toString());
+                        selectModel = new SelectModel();
+                        selectModel.setSelectName(m.get("group_number").toString());
+                        selectModel.setSelectCount(m.get("num").toString());
+                        answers.add(selectModel);
+                       //answers.put(m.get("group_number").toString(),m.get("num").toString());
                     }
                 }
                 question = questionMapper.selectByPrimaryKey(list.get(i));
                 questionAnswerCountModel.setQuestion(question);
                 questionAnswerCountModel.setAnswers(answers);
-                questionAnswerCountModel.setQuestionnaireId(question.getQuestionnaireId());
+                if(null != question){
+
+                    questionAnswerCountModel.setQuestionnaireId(question.getQuestionnaireId());
+                }
 
                 questionAnswerCountModels.add(questionAnswerCountModel);
             }
