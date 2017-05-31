@@ -34,29 +34,32 @@ public class LoginController {
      */
     @RequestMapping(value = "/doLogin", method= RequestMethod.POST)
     @ResponseBody
-    public String doLogin(HttpServletRequest request, HttpServletResponse response,
+    public Map<String,Object> doLogin(HttpServletRequest request, HttpServletResponse response,
                           @ModelAttribute User entity,
                           @RequestParam(value = "username", required = false) String username,
                           @RequestParam(value = "password", required = false) String password)
              {
+                 Map<String,Object> map = new HashMap<String,Object>();
+                /*String username = request.getParameter("username");
+                String password = request.getParameter("password");*/
+                User user = new User();
 
-        /*String username = request.getParameter("username");
-        String password = request.getParameter("password");*/
-        User user = new User();
-
-        user.setUserName(username);
-        user.setPassword(password);
+                user.setUserName(username);
+                user.setPassword(password);
 
 
-        if(userServiceImpl.loginCheck(entity)){
-            user = userServiceImpl.getUserByName(username);
-            HttpSession session = request.getSession();
-            session.setAttribute("user", user);
-            //response.sendRedirect(request.getContextPath()+"/admin/loginSuccess.jsp");
-            return "success";
-        }else{
-            return "fail";
-        }
+                if(userServiceImpl.loginCheck(entity)){
+                    user = userServiceImpl.getUserByName(username);
+                    HttpSession session = request.getSession();
+                    session.setAttribute("user", user);
+                    map.put("result","success");
+                    map.put("user",user);
+                    //response.sendRedirect(request.getContextPath()+"/admin/loginSuccess.jsp");
+                    return map;
+                }else{
+                    map.put("result","fail");
+                    return map;
+                }
 
     }
 
